@@ -1,0 +1,52 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <a class="navbar-brand" href="{% url 'index' %}">
+      <img src="{% static 'movies_collections/images/tv_3364355.png' %}" alt="" width="50" height="50" class="d-inline-block align-text-top">
+      Movies collections
+    </a>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'logout_user' %}">Wyloguj się {{ user.username }} </a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'login_user' %}">Zaloguj się</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'new_user' %}">Zarejestruj się</a>
+        </li>
+        {% endif %}
+        {% if user.is_superuser %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'users' %}">Zarządzanie profilami</a>
+        </li>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="#" role="button" >Profil</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'favourites' %}">Ulubione</a></li>
+              <li><a class="dropdown-item" aria-current="page" href="{% url 'my_profile' %}">Edycja profilu</a></li>
+            </ul>
+          </li>
+        {% endif %}
+
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'about' %}">O aplikacji</a>
+        </li>
+
+      </ul>
+      <form class="d-flex" id="search_movies" action="{% url 'search_movies' %}" method="POST">{% csrf_token %}
+        <input class="form-control me-2" type="search" name="title" placeholder="Wpisz tytuł filmu" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
+</nav>
