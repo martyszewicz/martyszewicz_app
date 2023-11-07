@@ -1,11 +1,12 @@
 {% extends "movies_collections/base.html" %}
+{% load i18n %}
 {% block body %}
 <!-- Modal -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ten film zostanie usunięty z ulubionych</h5>
+        <h5 class="modal-title" id="exampleModalLabel">{% trans "Ten film zostanie usunięty z ulubionych" %}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" id="idDeleteModalBody">
@@ -13,8 +14,8 @@
       </div>
       <div class="modal-footer">
         <form action="" method="GET" id="confirmDeleteForm">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-            <button type="submit" class="btn btn-danger">Potwierdź</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Zamknij" %}</button>
+            <button type="submit" class="btn btn-danger">{% trans "Potwierdź" %}</button>
         </form>
       </div>
     </div>
@@ -38,11 +39,11 @@
       <thead>
         <tr>
           <th scope="col">Id</th>
-          <th scope="col">Tytuł filmu</th>
-          <th scope="col">Opis</th>
-          <th scope="col">Adres url do platformy imdb.com</th>
-          <th scope="col">Plakat</th>
-          <th scope="col">Usuń z ulubionych</th>
+          <th scope="col">{% trans "Tytuł filmu" %}</th>
+          <th scope="col">{% trans "Opis" %}</th>
+          <th scope="col">{% trans "Adres url do platformy imdb.com" %}</th>
+          <th scope="col">{% trans "Plakat" %}</th>
+          <th scope="col">{% trans "Usuń z ulubionych" %}</th>
         </tr>
       </thead>
       <tbody>
@@ -54,14 +55,14 @@
                  <td class="align-middle"><a href="{{ film.short.url }}" class="custom-link">
                      {{ film.short.url }}</a></td>
                  <td>
-                     <img src="{{ film.short.image }}" class="img-thumbnail rounded" width="300" height="350" alt="Brak plakatu">
+                     <img src="{{ film.short.image }}" class="img-thumbnail rounded" width="300" height="350" alt="{% trans 'Brak plakatu' %}">
                  </td>
                  <td class="align-middle">
                      <a type="button" class="btn btn-danger btn-sm delete-confirm"
                         data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                         data-desc="Czy na pewno usunąć film {{ film.short.name }}?"
+                         data-desc="{% trans 'Czy na pewno usunąć film' %} {{ film.short.name }}?"
                          data-url="{% url 'movie_delete' film.imdbId %}">
-                         Usuń
+                         {% trans "Usuń" %}
                      </a>
                  </td>
          </tr>

@@ -9,17 +9,17 @@
     text-decoration: underline;
   }
 </style>
-
 {% extends "movies_collections/base.html" %}
+{% load i18n %}
 {% block body %}
 
 
 <table class="table">
   <thead class="table-dark">
     <tr>
-      <th scope="col">Nr</th>
-      <th scope="col">Tytuł</th>
-      <th scope="col">Rok produkcji</th>
+      <th scope="col">{% trans "Nr" %}</th>
+      <th scope="col">{% trans "Tytuł" %}</th>
+      <th scope="col">{% trans "Rok produkcji" %}</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -33,7 +33,7 @@
       <td>
         <div class="d-flex justify-content-center">
           <a href="{% url 'movie_details' movie_id=film.IMDB_ID %}" >
-            <img src="{{ film.IMG_POSTER }}" class="img-thumbnail rounded" width="100" height="150" alt="Brak plakatu"></a>
+            <img src="{{ film.IMG_POSTER }}" class="img-thumbnail rounded" width="100" height="150" alt="{% trans 'Brak plakatu' %}"></a>
         </div>
       </td>
     </tr>

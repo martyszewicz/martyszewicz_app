@@ -1,35 +1,36 @@
 {% extends "movies_collections/base.html" %}
+{% load i18n %}
 {% block body %}
 
 <div class="container">
     <div class="row mb-3">
-        <div class="col-5 h1">Rejestracja nowego użytkownika</div>
+        <div class="col-5 h1">{% trans "Rejestracja nowego użytkownika" %}</div>
     </div>
     <form id="user_form" action="{% url 'new_user' %}" method="POST">
         {% csrf_token %}
         <div class="row mb-3">
-            <div class="col-2 col-form-label"><label for="{{ form.username.id_for_label }}">Nazwa użytkownika</label></div>
+            <div class="col-2 col-form-label"><label for="{{ form.username.id_for_label }}">{% trans "Nazwa użytkownika" %}</label></div>
             <div class="col-4">
                 {{ form.username }}
             </div>
         </div>
 
         <div class="row mb-3">
-            <div class="col-2 col-form-label"><label for="{{ form.email.id_for_label }}">Adres email</label></div>
+            <div class="col-2 col-form-label"><label for="{{ form.email.id_for_label }}">{% trans "Adres email" %}</label></div>
             <div class="col-4">
                 {{ form.email }}
             </div>
         </div>
 
         <div class="row mb-3">
-            <div class="col-2 col-form-label"><label for="{{ form.password1.id_for_label }}">Hasło</label></div>
+            <div class="col-2 col-form-label"><label for="{{ form.password1.id_for_label }}">{% trans "Hasło" %}</label></div>
             <div class="col-4">
                 {{ form.password1 }}
             </div>
         </div>
 
         <div class="row mb-3">
-            <div class="col-2 col-form-label"><label for="{{ form.password2.id_for_label }}">Potwierdź hasło</label></div>
+            <div class="col-2 col-form-label"><label for="{{ form.password2.id_for_label }}">{% trans "Potwierdź hasło" %}</label></div>
             <div class="col-4">
                 {{ form.password2 }}
             </div>
@@ -37,7 +38,7 @@
 
         <div class="row mb-3">
             <div class="col-2"></div>
-            <div class="col-2"><input type="submit" value="Send" class="btn btn-primary"></div>
+            <div class="col-2"><input type="submit" value="{% trans 'Wyślij' %}" class="btn btn-primary"></div>
         </div>
 
     </form>

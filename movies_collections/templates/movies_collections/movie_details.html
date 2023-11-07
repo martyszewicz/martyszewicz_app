@@ -11,64 +11,65 @@
 </style>
 
 {% extends "movies_collections/base.html" %}
+{% load i18n %}
 {% block body %}
 
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-4"><img src="{{ movie.short.image }}" class="img-thumbnail rounded" width="300" height="350" alt="Brak plakatu"></div>
+    <div class="col-sm-4"><img src="{{ movie.short.image }}" class="img-thumbnail rounded" width="300" height="350" alt="{% trans 'Brak plakatu' %}"></div>
     <div class="col-sm-8">
         <div class="container" style="margin-top: 20px;">
             <div class="row">
                 <div class="col-md-auto">
                   <form action="{% url 'search_movies' %}" method="post">{% csrf_token %}
                       <input type="hidden" name="title" value='{{ request.session.title }}'>
-                      <button class="btn btn-outline-dark" type="submit"><b>Cofnij</b></button>
+                      <button class="btn btn-outline-dark" type="submit"><b>{% trans "Cofnij" %}</b></button>
                     </form>
                 </div>
                 <div class="col-md-auto">
                   <form action="{% url 'save_movie' movie_id=movie.imdbId %}">
                     <input type="hidden" name="back" value="1">
-                      <button class="btn btn-outline-dark" type="submit"><b>Zapisz do ulubionych</b></button>
+                      <button class="btn btn-outline-dark" type="submit"><b>{% trans "Zapisz do ulubionych" %}</b></button>
                     </form>
                 </div>
               </div>
         </div>
 
         <div class="row" style="margin-top: 20px;">
-            <div class="col"><b>Tytuł</b></div>
+            <div class="col"><b>{% trans "Tytuł" %}</b></div>
             <div class="col-8">{{ movie.short.name }}</div>
         </div>
         <div class="row" style="margin-top: 20px;">
-            <div class="col"><b>Rok produkcji</b></div>
+            <div class="col"><b>{% trans "Rok produkcji" %}</b></div>
             <div class="col-8">{{ movie.top.releaseYear.year }}</div>
         </div>
         <div class="row" style="margin-top: 20px;">
-            <div class="col"><b>Adres URL</b></div>
+            <div class="col"><b>{% trans "Adres URL" %}</b></div>
             <div class="col-8"><a href="{{ movie.short.url }}" class="custom-link">{{ movie.short.url }}</a></div>
         </div>
         <div class="row" style="margin-top: 20px;">
-            <div class="col"><b>Reżyser</b></div>
+            <div class="col"><b>{% trans "Reżyser" %}</b></div>
             {% if movie.short.director %}
                 {% for director in movie.short.director %}
                 <div class="col-8">{{ director.name }}</div>
                 {% endfor %}
             {% else %}
-                <div class="col-8">Brak informacji o reżyserze</div>
+                <div class="col-8">{% trans "Brak informacji o reżyserze" %}</div>
             {% endif %}
         </div>
         <div class="row" style="margin-top: 20px;">
-            <div class="col"><b>Ocena IMDb</b></div>
+            <div class="col"><b>{% trans "Ocena IMDb" %}</b></div>
             <div class="col-8">{{ movie.short.aggregateRating.ratingValue }}/10</div>
         </div>
         <div class="row" style="margin-top: 20px;">
-            <div class="col"><b>Skrót</b></div>
+            <div class="col"><b>{% trans "Skrót" %}</b></div>
             <div class="col-8">{{ movie.short.description }}</div>
         </div>
     </div>
   </div>
   <div class="row" style="margin-top: 20px;">
-      <div class="col-5"><b>Role główne</b>
+      <div class="col-5"><b>{% trans "Role główne" %}</b>
         <div class="row" style="margin-top: 20px;">
             {% if movie.short.actor %}
                 {% for actor in movie.short.actor %}
@@ -80,12 +81,12 @@
                 </div>
                 {% endfor %}
             {% else %}
-                <div class="col-">Brak informacji o aktorach</div>
+                <div class="col-">{% trans "Brak informacji o aktorach" %}</div>
             {% endif %}
         </div>
       </div>
       <div class="col-7">
-          <b>Recenzja</b>
+          <b>{% trans "Recenzja" %}</b>
           <div class="row" style="margin-top: 20px;">
               {{ movie.short.review.reviewBody }}
           </div>

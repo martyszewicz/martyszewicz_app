@@ -11,6 +11,7 @@
 </style>
 
 {% extends "movies_collections/base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block body %}
@@ -24,22 +25,22 @@
         <div class="carousel-item active">
           <img src="{% static 'movies_collections/images/kolaz-w-tle-filmu.jpg' %}" class="img-fluid" alt="...">
           <div class="carousel-caption">
-            <h1>Witaj w aplikacji Movie Collections!</h1>
-            <h4>Proponujemy zacząć od założenia konta</h4>
+            <h1>{% trans "Witaj w aplikacji Movie Collections!" %}</h1>
+            <h4>{% trans "Proponujemy zacząć od założenia konta" %}</h4>
           </div>
         </div>
         <div class="carousel-item">
           <img src="{% static 'movies_collections/images/3921000.jpg' %}" class="img-fluid" alt="...">
           <div class="carousel-caption">
-            <h1>Użyj wyszukiwarki</h1>
-            <h4>W prawym górnym rogu ekranu znajdziesz wyszukiwarkę filmów. Wyniki pochodzą z serwera IMDbOT</h4>
+            <h1>{% trans "Użyj wyszukiwarki" %}</h1>
+            <h4>{% trans "W prawym górnym rogu ekranu znajdziesz wyszukiwarkę filmów. Wyniki pochodzą z serwera IMDbOT" %}</h4>
           </div>
         </div>
         <div class="carousel-item">
           <img src="{% static 'movies_collections/images/profesjonalny-sprzet-oswietleniowy-na-planie-filmowym-z-dymem-w-powietrzu.jpg' %}" class="img-fluid" alt="...">
           <div class="carousel-caption">
-            <h1>Dodawaj do ulubionych</h1>
-            <h4>Po założeniu konta będziesz mógł tworzyć własne kolekcje ulubionych filmów</h4>
+            <h1>{% trans "Dodawaj do ulubionych" %}</h1>
+            <h4>{% trans "Po założeniu konta będziesz mógł tworzyć własne kolekcje ulubionych filmów" %}</h4>
           </div>
         </div>
       </div>

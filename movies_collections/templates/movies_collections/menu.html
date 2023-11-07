@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
@@ -12,40 +13,54 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'logout_user' %}">Wyloguj się {{ user.username }} </a>
+          <a class="nav-link active" aria-current="page" href="{% url 'logout_user' %}">{% trans "Wyloguj się" %} {{ user.username }} </a>
         </li>
         {% else %}
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'login_user' %}">Zaloguj się</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'login_user' %}">{% trans "Zaloguj się" %}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'new_user' %}">Zarejestruj się</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'new_user' %}">{% trans "Zarejestruj się" %}</a>
         </li>
         {% endif %}
         {% if user.is_superuser %}
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'users' %}">Zarządzanie profilami</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'users' %}">{% trans "Zarządzanie profilami" %}</a>
         </li>
         {% endif %}
 
         {% if user.is_authenticated %}
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="#" role="button" >Profil</a>
+            <a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="#" role="button" >{% trans "Profil" %}</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'favourites' %}">Ulubione</a></li>
-              <li><a class="dropdown-item" aria-current="page" href="{% url 'my_profile' %}">Edycja profilu</a></li>
+              <li><a class="dropdown-item" href="{% url 'favourites' %}">{% trans "Ulubione" %}</a></li>
+              <li><a class="dropdown-item" aria-current="page" href="{% url 'my_profile' %}">{% trans "Edycja profilu" %}</a></li>
             </ul>
           </li>
         {% endif %}
 
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'about' %}">O aplikacji</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'about' %}">{% trans "O aplikacji" %}</a>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="#" role="button">
+                {% get_language_info for request.LANGUAGE_CODE as lang %}
+                <img src="{% static 'movies_collections/images/'|add:request.LANGUAGE_CODE|add:'.png' %}" alt="{{ lang.code }}">
+            </a>
+            <ul class="dropdown-menu">
+                {% for code, language in LANGUAGES %}
+                    <li><a class="dropdown-item" href="{% url 'change_language' code %}">
+                        <img src="{% static 'movies_collections/images/'|add:code|add:'.png' %}" alt="{{ code }}">
+                    </a></li>
+                {% endfor %}
+            </ul>
         </li>
 
       </ul>
       <form class="d-flex" id="search_movies" action="{% url 'search_movies' %}" method="POST">{% csrf_token %}
-        <input class="form-control me-2" type="search" name="title" placeholder="Wpisz tytuł filmu" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Szukaj</button>
+        <input class="form-control me-2" type="search" name="title" placeholder="{% trans 'Wpisz tytuł filmu' %}" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">{% trans "Szukaj" %}</button>
       </form>
     </div>
   </div>
