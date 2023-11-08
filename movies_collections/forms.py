@@ -20,7 +20,7 @@ class UserRegistrationForm(UserCreationForm):
         if not username:
             raise forms.ValidationError(_("Pole 'nazwa użytkownika' nie może być puste"))
         if User.objects.filter(username=username).exists():
-            raise forms.ValidationError(_(f"Użytkownik o nazwie '{username}' już istnieje"))
+            raise forms.ValidationError(_("Użytkownik o nazwie '{username}' już istnieje").format(username=username))
         return username
 
     def clean_email(self):
@@ -28,7 +28,7 @@ class UserRegistrationForm(UserCreationForm):
         if not email:
             raise forms.ValidationError(_("Pole 'email' nie może być puste"))
         if User.objects.filter(email=email).exists():
-            raise forms.ValidationError(_(f"Adres email '{email}' jest już wykorzystany"))
+            raise forms.ValidationError(_("Adres email '{email}' jest już wykorzystany").format(email=email))
         return email
 
     def clean_password(self):
