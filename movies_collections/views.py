@@ -178,8 +178,9 @@ def search_movies(request):
     if request.method == "POST":
         title = request.POST['title']
         if not title:
-            title = request.session['title']
-            if not title:
+            try:
+                title = request.session['title']
+            except:
                 messages.info(request, _('Proszę podać tytuł'))
                 return redirect("index")
         try:

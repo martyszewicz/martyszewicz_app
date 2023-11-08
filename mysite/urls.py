@@ -17,9 +17,11 @@ Including another URLconf
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.urls import path, include
+from . import views
 
 
 urlpatterns = i18n_patterns(
+    path('', views.homepage, name='homepage'),
     path('admin/', admin.site.urls),
     path('coffee_machine/', include('coffee_machine.urls')),
     path('movies_collections/', include('movies_collections.urls')),
