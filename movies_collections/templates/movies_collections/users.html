@@ -10,7 +10,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" id="idDeleteModalBody">
-        ...
+        <span id="userName"></span>
       </div>
       <div class="modal-footer">
         <form action="" method="GET" id="confirmDeleteForm">
@@ -26,9 +26,10 @@
 <script>
     $(document).ready(function(){
       $(".delete-confirm").click(function(){
-          var desc = $(this).attr('data-desc');
+          var desc = $(this).find('div[data-desc]').text();
           var url = $(this).attr('data-url');
-          $('#idDeleteModalBody').text(desc);
+          var userName = $(this).closest('tr').find('td:eq(0)').text().trim();
+          $('#userName').text(desc + " " + userName);
           $('#confirmDeleteForm').attr("action", url);
       });
     });
@@ -75,8 +76,8 @@
                         class="btn btn-primary btn-sm" role="button">{% trans "Edycja" %}</a>
                      <a type="button" class="btn btn-danger btn-sm delete-confirm"
                         data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
-                         <div data-desc="{% trans 'Czy na pewno usunąć użytkownika' %} {{ user.username }}?"></div>
-                         data-url="{% url 'user_delete' user.username %}">
+                         <div data-desc="{% trans 'Czy na pewno usunąć użytkownika' %}?"></div>
+                         <div data-url="{% url 'user_delete' user.username %}"></div>
                          {% trans "Usuń" %}
                      </a>
                  </td>

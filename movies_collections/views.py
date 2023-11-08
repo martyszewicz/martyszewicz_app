@@ -1,3 +1,5 @@
+import pdb
+
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.shortcuts import render, redirect
@@ -35,7 +37,7 @@ def login_user(request):
 
         if user is not None:
             login(request, user)
-            messages.info(request, _(f"Witaj {username}!"))
+            messages.info(request, _("Witaj {username}!").format(username=username))
             return redirect('index')
         else:
             messages.info(request, _("Błąd logowania, spróbuj ponownie"))
@@ -56,11 +58,11 @@ def new_user(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.info(request, _(f"Użytkownik {form.cleaned_data['username']} został zarejestrowany"))
+            messages.info(request, _("Użytkownik {username} został zarejestrowany").format(username=form.cleaned_data['username']))
         else:
             for field, errors in form.errors.items():
                 for error in errors:
-                    messages.info(request, _(f'Błąd: {error}'))
+                    messages.info(request, _('Błąd: {error}').format(error=error))
 
     else:
         form = UserRegistrationForm()
@@ -93,7 +95,7 @@ def my_profile(request):
         else:
             for field, errors in form.errors.items():
                 for error in errors:
-                    messages.error(request, _(f"Błąd w polu '{field}': {error}"))
+                    messages.error(request, _("Błąd w polu '{field}': {error}").format(field=field, error=error))
     else:
         initial_email = request.user.email
         form = UserEditForm(instance=request.user, initial={'new_email': initial_email})
@@ -139,17 +141,17 @@ def edit_user(request, user_name):
             if new_email != user.email:
                 user.email = new_email
                 user.save(update_fields=['email'])
-                messages.success(request, _(f"Adres email użytkownika {user.username} został zaktualizowany."))
+                messages.success(request, _("Adres email użytkownika {username} został zaktualizowany.").format(username=user.username))
             if new_password:
                 user.set_password(new_password)
                 update_session_auth_hash(request, user)
                 user.save(update_fields=['password'])
-                messages.success(request, _(f"Hasło użytkownika {user.username} zostało zaktualizowane."))
+                messages.success(request, _("Hasło użytkownika {username} zostało zaktualizowane.").format(username=user.username))
             return redirect('users')
         else:
             for field, errors in form.errors.items():
                 for error in errors:
-                    messages.error(request, _(f"Błąd w polu '{field}': {error}"))
+                    messages.error(request, _("Błąd w polu '{field}': {error}").format(field=field, error=error))
 
     else:
         initial_email = user.email
@@ -166,7 +168,7 @@ def user_delete(request, user_name):
 
     user_to_delete = User.objects.get(username=user_name)
     user_to_delete.delete()
-    messages.info(request, _(f"Użytkownik '{user_name}' został pomyślnie usunięty"))
+    messages.info(request, _("Użytkownik '{username}' został pomyślnie usunięty").format(username=user_name))
     return redirect('users')
 
 
@@ -183,7 +185,7 @@ def search_movies(request):
         try:
             response = requests.get(f'https://search.imdbot.workers.dev/?q={title}')
             if response.status_code != requests.codes.ok:
-                messages.info(request, _(f"Nie można połączyć z bazą danych, kod błędu: {response.status_code}"))
+                messages.info(request, _("Nie można połączyć z bazą danych, kod błędu: {error}").format(error=response.status_code))
                 return render(request, 'movies_collections/search_movies.html', {"user": request.user})
             else:
                 data = response.json()
@@ -203,7 +205,7 @@ def search_movies(request):
                 return render(request, 'movies_collections/search_movies.html',
                               {"user": request.user, "transformed_films": transformed_films})
         except Exception as e:
-            return JsonResponse(_({f"Błąd'{e}'"}))
+            return JsonResponse(_({"Błąd'{e}'"}).format(e=e))
 
     if request.method == "GET":
         return render(request, 'movies_collections/search_movies.html', {"user": request.user})
@@ -215,7 +217,7 @@ def movie_details(request, movie_id):
         redirect("index")
     response = requests.get(f'https://search.imdbot.workers.dev/?tt={movie_id}')
     if response.status_code != requests.codes.ok:
-        messages.info(request, _(f"Nie można połączyć z bazą danych, kod błędu: {response.status_code}"))
+        messages.info(request, _("Nie można połączyć z bazą danych, kod błędu: {error}").format(error=response.status_code))
     else:
         movie = response.json()
         return render(request, "movies_collections/movie_details.html", {"movie": movie, "title": title})
@@ -242,7 +244,7 @@ def favourites(request):
         response = requests.get(f'https://search.imdbot.workers.dev/?tt={film}')
         message = None
         if response.status_code != requests.codes.ok:
-            message = _(f"Nie można połączyć z bazą danych, kod błędu: {response.status_code}")
+            message = _("Nie można połączyć z bazą danych, kod błędu: {error}").format(error=response.status_code)
         if message is not None:
             messages.info(request, message)
         else:
