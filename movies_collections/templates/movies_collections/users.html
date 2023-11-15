@@ -13,7 +13,7 @@
         <span id="userName"></span>
       </div>
       <div class="modal-footer">
-        <form action="" method="GET" id="confirmDeleteForm">
+        <form action="{% url 'user_delete' user.username %}" method="POST" id="confirmDeleteForm">{% csrf_token %}
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Zamknij" %}</button>
             <button type="submit" class="btn btn-danger">{% trans "Usuń" %}</button>
         </form>
@@ -25,13 +25,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
     $(document).ready(function(){
-      $(".delete-confirm").click(function(){
-          var desc = $(this).find('div[data-desc]').text();
-          var url = $(this).attr('data-url');
-          var userName = $(this).closest('tr').find('td:eq(0)').text().trim();
-          $('#userName').text(desc + " " + userName);
-          $('#confirmDeleteForm').attr("action", url);
-      });
+          $(".delete-confirm").click(function(){
+              var desc = $(this).find('div[data-desc]').text();
+              var userName = $(this).closest('tr').find('td:eq(0)').text().trim();
+              $('#userName').text(desc + " " + userName);
+              var deleteUrl = "{% url 'user_delete' user_name='dummy' %}".replace('dummy', encodeURIComponent(userName));
+              $('#confirmDeleteForm').attr("action", deleteUrl);
+          });
     });
 </script>
 

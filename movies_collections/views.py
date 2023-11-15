@@ -1,266 +1,258 @@
-import pdb
-
-from django.conf import settings
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.auth.models import User
+from django.shortcuts import redirect, render
 from django.urls import reverse
-from .forms import UserRegistrationForm, UserEditForm, AdminEditForm
-from .models import FavouritesMovies
-from django.http import JsonResponse
-import requests
-from django.utils.translation import gettext as _
-from django.utils.translation import activate
+from django.views import View
+from mysite import settings
+from .api import MoviesAPI, MovieDetailsAPI, FavouritesService
+from django.utils.translation import gettext as _, activate
+from .services import *
 
 
-def index(request):
-    return render(request, "movies_collections/index.html", {'user': request.user})
+class IndexView(View):
+    template_name = 'movies_collections/index.html'
+
+    def get(self, request):
+        user = request.user
+        context = {'user': user}
+        return render(request, self.template_name, context)
 
 
-def change_language(request, language_code):
-    if language_code in [lang[0] for lang in settings.LANGUAGES]:
-        request.session['django_language'] = language_code
-        activate(language_code)
-    return redirect(reverse('index'))
+class ChangeLanguageView(View):
+    def get(self, request, language_code):
+        if language_code in [lang[0] for lang in settings.LANGUAGES]:
+            request.session['django_language'] = language_code
+            activate(language_code)
+            return redirect(reverse('index'))
+        else:
+            return redirect(reverse('index'))
 
-# Users functions below _________________________________________
 
+class LoginUserView(View):
+    template_name = 'movies_collections/login.html'
+    user_service = UserService()
 
-def login_user(request):
-    if request.method == "GET":
-        return render(request, 'movies_collections/login.html', {'user': request.user})
-    else:
-        username = request.POST['user_name']
-        password = request.POST['user_pass']
-        user = authenticate(request, username=username, password=password)
+    def get(self, request):
+        return render(request, 'movies_collections/login.html')
+
+    def post(self, request):
+        username = request.POST.get('user_name')
+        password = request.POST.get('user_pass')
+        user = self.user_service.authenticate_user(request, username, password)
 
         if user is not None:
-            login(request, user)
-            messages.info(request, _("Witaj {username}!").format(username=username))
+            self.user_service.login_user(request, user, username)
             return redirect('index')
         else:
-            messages.info(request, _("Błąd logowania, spróbuj ponownie"))
-            return render(request, 'movies_collections/login.html', {'login_failed': True, 'user': request.user})
+            login_failed_data = self.user_service.login_failed_data(request, request.user)
+            return render(request, self.template_name, login_failed_data)
 
 
-def logout_user(request):
-    if request.user.is_authenticated:
-        logout(request)
-        messages.info(request, _("Wylogowałeś się poprawnie"))
-        return redirect('index')
-    else:
-        return redirect('index')
+class LogoutUserView(View):
+    template_name = 'movies_collections/index.html'
+
+    def get(self, request):
+        user_service = UserService()
+        logout_data = user_service.logout_user_data(request)
+        return render(request, self.template_name, logout_data)
 
 
-def new_user(request):
-    if request.method == 'POST':
+class NewUserView(View):
+    template_name = 'movies_collections/new_user.html'
+    user_service = UserService()
+
+    def get(self, request):
+        return render(request, self.template_name, self.user_service.get_context_data(request))
+
+    def post(self, request):
         form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.info(request, _("Użytkownik {username} został zarejestrowany").format(username=form.cleaned_data['username']))
+        registration_data = self.user_service.process_registration_data(request, form)
+
+        if registration_data['registration_successful']:
+            return redirect('index')
         else:
-            for field, errors in form.errors.items():
-                for error in errors:
-                    messages.info(request, _('Błąd: {error}').format(error=error))
-
-    else:
-        form = UserRegistrationForm()
-
-    return render(request, 'movies_collections/new_user.html', {'form': form, 'user': request.user})
+            return render(request, self.template_name, registration_data)
 
 
-def my_profile(request):
-    if request.method == 'POST':
+class MyProfileView(View):
+    template_name = 'movies_collections/my_profile.html'
+    my_profile_service = MyProfileService()
+
+    def get(self, request):
+        return render(request, self.template_name, self.my_profile_service.get_context_data(request))
+
+    def post(self, request):
         form = UserEditForm(request.POST, instance=request.user)
-        if form.is_valid():
-            current_password = form.cleaned_data['current_password']
-            new_email = form.cleaned_data['new_email']
-            new_password = form.cleaned_data['new_password']
+        update_data = self.my_profile_service.update_user_data(request, form)
 
-            if request.user.check_password(current_password):
-                if request.user.check_password(current_password):
-                    if new_email:
-                        request.user.email = new_email
-                        request.user.save(update_fields=['email'])
-                if new_password:
-                    if new_password:
-                        request.user.set_password(new_password)
-                        update_session_auth_hash(request, request.user)
-                        request.user.save(update_fields=['password'])
-                messages.success(request, _("Dane użytkownika zostały zaktualizowane."))
-                return redirect('my_profile')
-            else:
-                messages.error(request, _("Aktualne hasło jest nieprawidłowe."))
+        if update_data['update_successful']:
+            return redirect('my_profile')
         else:
-            for field, errors in form.errors.items():
-                for error in errors:
-                    messages.error(request, _("Błąd w polu '{field}': {error}").format(field=field, error=error))
-    else:
-        initial_email = request.user.email
-        form = UserEditForm(instance=request.user, initial={'new_email': initial_email})
-
-    return render(request, 'movies_collections/my_profile.html', {'form': form})
+            return render(request, self.template_name, update_data)
 
 
-# Superuser functions below ____________________________________
+class UsersView(View):
+    template_name = 'movies_collections/users.html'
+    users_view_service = UsersViewService()
 
-def users(request):
-    if not request.user.is_authenticated or not request.user.is_superuser:
-        return redirect('index')
+    def get(self, request):
+        user_list = self.users_view_service.handle_get_request(request)
 
-    user_list = User.objects.all()
-    return render(request, 'movies_collections/users.html', {'users': user_list})
+        if user_list is not None:
+            context_data = self.users_view_service.get_context_data(user_list)
+            return render(request, self.template_name, context_data)
+        else:
+            return redirect('index')
 
-
-def user_status_change(request, action, user_name):
-    user = User.objects.get(username=user_name)
-    if not request.user.is_authenticated or not request.user.is_superuser:
-        return redirect('index')
-    if action == 'status_change':
-        user.is_active = not user.is_active
-    elif action == 'admin_change':
-        user.is_superuser = not user.is_superuser
-    user.save()
-
-    return redirect('users')
-
-
-def edit_user(request, user_name):
-    if not request.user.is_authenticated or not request.user.is_superuser:
-        return redirect('index')
-    if user_name is None:
-        messages.info(request, _("Nie ma takiego użytkownika"))
+    def post(self, request):
         return redirect('users')
-    user = User.objects.get(username=user_name)
-    if request.method == "POST":
-        form = AdminEditForm(request.POST, instance=user)
-        if form.is_valid():
-            new_email = form.cleaned_data['new_email']
-            new_password = form.cleaned_data['new_password']
-            if new_email != user.email:
-                user.email = new_email
-                user.save(update_fields=['email'])
-                messages.success(request, _("Adres email użytkownika {username} został zaktualizowany.").format(username=user.username))
-            if new_password:
-                user.set_password(new_password)
-                update_session_auth_hash(request, user)
-                user.save(update_fields=['password'])
-                messages.success(request, _("Hasło użytkownika {username} zostało zaktualizowane.").format(username=user.username))
+
+
+class UserStatusChangeView(View):
+    user_service = UserEdit()
+
+    def get(self, request, action, user_name):
+        user = User.objects.get(username=user_name)
+
+        if self.user_service.authorize_users(request.user):
+            return redirect('index')
+
+        self.user_service.perform_action(user, action)
+        return redirect('users')
+
+
+class EditUserView(View):
+    template_name = 'movies_collections/edit_user.html'
+    user_service = UserEdit()
+
+    def get(self, request, user_name):
+        if not request.user.is_authenticated or not request.user.is_superuser:
+            return redirect('index')
+
+        user = self.user_service.get_user_instance(user_name)
+        if not user:
+            messages.info(request, _("Nie ma takiego użytkownika"))
             return redirect('users')
-        else:
-            for field, errors in form.errors.items():
-                for error in errors:
-                    messages.error(request, _("Błąd w polu '{field}': {error}").format(field=field, error=error))
 
-    else:
-        initial_email = user.email
-        form = AdminEditForm(instance=user, initial={'new_email': initial_email})
-    return render(request, 'movies_collections/edit_user.html', {'form': form})
+        form = self.user_service.create_edit_form(user)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, user_name):
+        if not request.user.is_authenticated or not request.user.is_superuser:
+            return redirect('index')
+
+        form_data = request.POST
+        edited, errors, user = self.user_service.process_edit_user(request, user_name, form_data)
+
+        if edited:
+            messages.success(request, _("Użytkownik {username} został zaktualizowany.").format(username=user.username))
+            return redirect('users')
+
+        for field, field_errors in errors.items():
+            for error in field_errors:
+                messages.error(request, _("Błąd w polu '{field}': {error}").format(field=field, error=error))
+
+        form = self.user_service.create_edit_form(user, form_data)
+        return render(request, self.template_name, {'form': form})
 
 
-def user_delete(request, user_name):
-    if not request.user.is_authenticated or not request.user.is_superuser:
-        return redirect('index')
-    if user_name is None:
-        messages.info(request, _("Nie ma takiego użytkownika"))
+class UserDeleteView(View):
+    def post(self, request, user_name):
+        if not request.user.is_authenticated or not request.user.is_superuser:
+            return redirect('index')
+
+        user_service = UsersViewService()
+        deleted_user_name = user_service.delete_user(user_name)
+
+        messages.info(request, _("Użytkownik '{username}' został pomyślnie usunięty").format(username=deleted_user_name))
         return redirect('users')
 
-    user_to_delete = User.objects.get(username=user_name)
-    user_to_delete.delete()
-    messages.info(request, _("Użytkownik '{username}' został pomyślnie usunięty").format(username=user_name))
-    return redirect('users')
 
+class SearchMoviesView(View):
+    template_name = 'movies_collections/search_movies.html'
+    movies_api = MoviesAPI()
 
-# Views about movies below_________________________________
+    def get(self, request):
+        return render(request, self.template_name, {"user": request.user})
 
-def search_movies(request):
-    if request.method == "POST":
-        title = request.POST['title']
+    def post(self, request):
+        title = request.POST.get('title', '').strip()
+
         if not title:
             try:
                 title = request.session['title']
             except:
                 messages.info(request, _('Proszę podać tytuł'))
                 return redirect("index")
-        try:
-            response = requests.get(f'https://search.imdbot.workers.dev/?q={title}')
-            if response.status_code != requests.codes.ok:
-                messages.info(request, _("Nie można połączyć z bazą danych, kod błędu: {error}").format(error=response.status_code))
-                return render(request, 'movies_collections/search_movies.html', {"user": request.user})
-            else:
-                data = response.json()
-                list_of_searched_films = []
-                request.session['title'] = title
-                for movie in data['description']:
-                    list_of_searched_films.append(movie)
-                transformed_films = []
-                for film in list_of_searched_films:
-                    transformed_film = {
-                        'IMDB_ID': film.get('#IMDB_ID'),
-                        'TITLE': film.get('#TITLE'),
-                        'YEAR': film.get('#YEAR'),
-                        'IMG_POSTER': film.get('#IMG_POSTER')
-                    }
-                    transformed_films.append(transformed_film)
-                return render(request, 'movies_collections/search_movies.html',
-                              {"user": request.user, "transformed_films": transformed_films})
-        except Exception as e:
-            return JsonResponse(_({"Błąd'{e}'"}).format(e=e))
 
-    if request.method == "GET":
-        return render(request, 'movies_collections/search_movies.html', {"user": request.user})
+        movies_data, error_message = self.movies_api.search_movies(title)
+
+        if error_message:
+            messages.info(request, error_message)
+            return render(request, self.template_name, {"user": request.user})
+
+        request.session['title'] = title
+
+        return render(request, self.template_name, {"user": request.user, "transformed_films": movies_data})
 
 
-def movie_details(request, movie_id):
-    title = request.session['title']
-    if title is None:
-        redirect("index")
-    response = requests.get(f'https://search.imdbot.workers.dev/?tt={movie_id}')
-    if response.status_code != requests.codes.ok:
-        messages.info(request, _("Nie można połączyć z bazą danych, kod błędu: {error}").format(error=response.status_code))
-    else:
-        movie = response.json()
-        return render(request, "movies_collections/movie_details.html", {"movie": movie, "title": title})
+class MovieDetailsView(View):
+    template_name = 'movies_collections/movie_details.html'
+    movie_details_api = MovieDetailsAPI()
 
+    def get(self, request, movie_id):
+        title = request.session.get('title')
 
-def save_movie(request, movie_id):
-    if not request.user.is_authenticated:
-        return redirect('login_user')
-    movie_id = str(movie_id)
-    record = FavouritesMovies.objects.filter(user=request.user, movie_id=movie_id).exists()
-    if record:
-        messages.info(request, _("Ten film już jest zapisany w bibliotece 'Ulubione'"))
-    else:
-        FavouritesMovies.objects.create(user=request.user, movie_id=movie_id)
-        messages.info(request, _("Film zapisano pomyślnie w bibliotece 'Ulubione'"))
-    return redirect('movie_details', movie_id=movie_id)
+        if title is None:
+            return redirect("index")
 
+        movie_data, error_message = self.movie_details_api.get_movie_details(movie_id)
 
-def favourites(request):
-    fav_movies = FavouritesMovies.objects.filter(user=request.user)
-    list_of_film_id = [movie.movie_id for movie in fav_movies]
-    film_collection = []
-    for film in list_of_film_id:
-        response = requests.get(f'https://search.imdbot.workers.dev/?tt={film}')
-        message = None
-        if response.status_code != requests.codes.ok:
-            message = _("Nie można połączyć z bazą danych, kod błędu: {error}").format(error=response.status_code)
-        if message is not None:
-            messages.info(request, message)
+        if movie_data:
+            transformed_movie = self.movie_details_api.transform_movie_data(movie_data)
+            return render(request, self.template_name, {"movie": transformed_movie, "title": title})
         else:
-            movie = response.json()
-            film_collection.append(movie)
-    return render(request, 'movies_collections/favourites.html', {'film_collection': film_collection})
+            messages.info(request, _("Błąd podczas pobierania danych z API: {error}").format(error=error_message))
+            return render(request, self.template_name, {"title": title})
 
 
-def movie_delete(request, movie_id):
-    if not request.user.is_authenticated:
-        return redirect('login_user')
-    FavouritesMovies.objects.filter(user=request.user, movie_id=movie_id).delete()
-    messages.info(request, _(f"Film został pomyślnie usunięty z ulubionych"))
-    return redirect('favourites')
+class SaveMovieView(View):
+    favourites_service = FavouritesService()
+
+    def get(self, request, movie_id):
+        if not request.user.is_authenticated:
+            return redirect('login_user')
+
+        response_message = self.favourites_service.save_movie(request.user, movie_id)
+        messages.info(request, response_message)
+
+        return redirect('movie_details', movie_id=movie_id)
 
 
-def about(request):
-    return render(request, 'movies_collections/about.html')
+class FavouritesView(View):
+    template_name = 'movies_collections/favourites.html'
+    favourites_service = FavouritesService()
+
+    def get(self, request):
+        if not request.user.is_authenticated:
+            return redirect('login_user')
+
+        film_collection = self.favourites_service.get_favourite_movies(request.user, request)
+        return render(request, self.template_name, {'film_collection': film_collection})
+
+
+class MovieDeleteView(View):
+    favourites_service = FavouritesService()
+
+    def get(self, request, movie_id):
+        if not request.user.is_authenticated:
+            return redirect('login_user')
+
+        self.favourites_service.delete_movie(request.user, movie_id, request)
+
+        return redirect('favourites')
+
+
+class AboutView(View):
+    template_name = 'movies_collections/about.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
