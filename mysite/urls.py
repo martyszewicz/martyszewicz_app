@@ -25,4 +25,5 @@ urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
     path('coffee_machine/', include('coffee_machine.urls')),
     path('movies_collections/', include('movies_collections.urls')),
+    path('battleships/', include('battleships.urls')),
 )

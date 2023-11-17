@@ -1,0 +1,37 @@
+{% extends "battleships/base.html" %}
+
+{% block body %}
+{% for game in games %}
+
+    {% if modal_data %}
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+            Launch demo modal
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Enter Password</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Display form with room_code and username -->
+                        <form method="post" action="{% url 'join_game' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="username" value="{{ modal_data.username }}">
+                            <input type="hidden" name="room_code" value="{{ modal_data.room_code }}">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                            <button type="submit" class="btn btn-primary">Join Game</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+
+{% endblock %}

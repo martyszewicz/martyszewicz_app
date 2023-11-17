@@ -7,3 +7,4 @@ redis==5.0.1
 channels~=4.0.0
 asgiref~=3.7.2
 djangorestframework~=3.14.0
+whitenoise~=6.6.0

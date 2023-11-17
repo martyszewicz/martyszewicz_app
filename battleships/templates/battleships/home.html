@@ -1,0 +1,25 @@
+{% extends "battleships/base.html" %}
+
+{% block body %}
+
+<form method="post" action="{% url 'home' %}">
+    {% csrf_token %}
+    <div class="container">
+      <div class="row">
+        <div class="col">
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary" type="submit" name="new_game">New game</button>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+            <div class="d-grid gap-2 my-4">
+                <button class="btn btn-primary" type="submit" name="join_game">Join Game</button>
+            </div>
+        </div>
+      </div>
+    </div>
+</form>
+
+{% endblock %}

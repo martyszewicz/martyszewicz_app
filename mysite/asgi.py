@@ -7,23 +7,24 @@ For more information on this file, see
 https://docs.djangoproject.com/en/4.2/howto/deployment/asgi/
 """
 
-from django.urls import path
+import os
+from django.urls import re_path
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 from battleships.consumers import GameRoom
 from django.core.asgi import get_asgi_application
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
 
-application = get_asgi_application()
+http_application = get_asgi_application()
 
 ws_pattern = [
-    path('ws/game/<room_code>', GameRoom)
+    re_path(r'^battleships/ws/game/(?P<room_code>\w+)/$', GameRoom.as_asgi()),
 ]
 
 application = ProtocolTypeRouter(
     {
-        'websocket': AuthMiddlewareStack(URLRouter(
-            ws_pattern
-        ))
+        'http': get_asgi_application(),
+        'websocket': AuthMiddlewareStack(URLRouter(ws_pattern)),
     }
 )
