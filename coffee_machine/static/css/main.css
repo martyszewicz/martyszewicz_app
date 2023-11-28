@@ -155,6 +155,108 @@
     left: calc(50% - 45%);
     background-color: #a6a6a6;
 }
+
+@keyframes liquid {
+  0% {
+    height: 0px;
+    opacity: 1;
+  }
+  5% {
+    height: 0px;
+    opacity: 1;
+  }
+  20% {
+    height: 150px;
+    opacity: 1;
+  }
+  95% {
+    height: 150px;
+    opacity: 1;
+  }
+  100% {
+    height: 150px;
+    opacity: 0;
+  }
+}
+.coffee-medium__liquid {
+  width: 16px;
+  height: 150px;
+  opacity: 0;
+  position: absolute;
+  top: 100px;
+  left: calc(50% - 8px);
+  background-color: #74372b;
+  animation: liquid 4s 1s linear infinite;
+}
+
+.coffee-medium__smoke {
+  width: 12px;
+  height: 30px;
+  position: absolute;
+  border-radius: 10px;
+  background-color: #b3aeae;
+}
+@keyframes smokeOne {
+  0% {
+    bottom: 60px;
+    opacity: 0;
+  }
+  40% {
+    bottom: 90px;
+    opacity: .5;
+  }
+  80% {
+    bottom: 120px;
+    opacity: .3;
+  }
+  100% {
+    bottom: 140px;
+    opacity: 0;
+  }
+}
+@keyframes smokeTwo {
+  0% {
+    bottom: 80px;
+    opacity: 0;
+  }
+  40% {
+    bottom: 110px;
+    opacity: .5;
+  }
+  80% {
+    bottom: 130px;
+    opacity: .3;
+  }
+  100% {
+    bottom: 130px;
+    opacity: 0;
+  }
+}
+.coffee-medium__smoke-one {
+  opacity: 0;
+  bottom: 200px;
+  left: 300px;
+  animation: smokeOne 3s 1s linear infinite;
+}
+.coffee-medium__smoke-two {
+  opacity: 0;
+  bottom: 200px;
+  left: 320px;
+  animation: smokeTwo 3s 2s linear infinite;
+}
+.coffee-medium__smoke-three {
+  opacity: 0;
+  bottom: 200px;
+  right: 300px;
+  animation: smokeTwo 3s 3s linear infinite;
+}
+.coffee-medium__smoke-for {
+  opacity: 0;
+  bottom: 200px;
+  right: 330px;
+  animation: smokeOne 3s 1s linear infinite;
+}
+
 .coffee_medium::before{
     content: '';
     width: 90%;

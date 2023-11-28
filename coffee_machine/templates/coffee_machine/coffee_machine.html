@@ -61,7 +61,7 @@
                 <div class="coffee_header_display">
                             <ul>
                                 {% for message in messages %}
-                                    <li><pre>{{ message | safe }}</pre></li>
+                                    <li class="coffee_message"><pre>{{ message | safe }}</pre></li>
                                 {% endfor %}
                             </ul>
                 </div>
@@ -78,10 +78,60 @@
             <div class="coffee_header_text">Please insert coins here ➡</div>
         </div>
         <div class="coffee_medium">
+            <div id="pouringAnimation"></div>
             <div class="coffee_medium_exit"></div>
             <div class="coffee_medium_cup"></div>
         </div>
         <div class="coffee_footer"></div>
     </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        function playPouringAnimation(coffeeType) {
+            var pouringAnimation = document.getElementById('pouringAnimation');
+
+            pouringAnimation.innerHTML = '';
+
+            var liquidDiv = document.createElement('div');
+            liquidDiv.className = 'coffee-medium__liquid';
+
+            var smokeDivOne = document.createElement('div');
+            smokeDivOne.className = 'coffee-medium__smoke coffee-medium__smoke-one';
+
+            var smokeDivTwo = document.createElement('div');
+            smokeDivTwo.className = 'coffee-medium__smoke coffee-medium__smoke-two';
+
+            var smokeDivThree = document.createElement('div');
+            smokeDivThree.className = 'coffee-medium__smoke coffee-medium__smoke-three';
+
+            var smokeDivFour = document.createElement('div');
+            smokeDivFour.className = 'coffee-medium__smoke coffee-medium__smoke-for';
+
+            pouringAnimation.appendChild(liquidDiv);
+            pouringAnimation.appendChild(smokeDivOne);
+            pouringAnimation.appendChild(smokeDivTwo);
+            pouringAnimation.appendChild(smokeDivThree);
+            pouringAnimation.appendChild(smokeDivFour);
+
+            pouringAnimation.style.display = 'block';
+
+            setTimeout(function () {
+                pouringAnimation.style.display = 'none';
+            }, 5000);
+        }
+
+        var coffeeReadyMessages = document.querySelectorAll('.coffee_message');
+
+        if (coffeeReadyMessages.length > 0) {
+            var lastCoffeeReadyMessage = coffeeReadyMessages[coffeeReadyMessages.length - 1];
+
+            if (lastCoffeeReadyMessage.textContent.includes('is ready')) {
+                playPouringAnimation();
+            }
+        }
+    });
+</script>
+
 </body>
 </html>

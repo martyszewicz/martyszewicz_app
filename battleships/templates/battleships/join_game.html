@@ -2,36 +2,37 @@
 
 {% block body %}
 {% for game in games %}
+    <div class="row">
+        <div class="col">
+            <p>{{ game.room_code }} {{game.game_creator}} {% if game.is_private %} (Private Game) {% else %} (Public Game) {% endif %}</p>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal{{ game.room_code }}">
+                Join Game
+            </button>
 
-    {% if modal_data %}
-
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-            Launch demo modal
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Enter Password</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Display form with room_code and username -->
-                        <form method="post" action="{% url 'join_game' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="username" value="{{ modal_data.username }}">
-                            <input type="hidden" name="room_code" value="{{ modal_data.room_code }}">
-                            <label for="password">Password:</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                            <button type="submit" class="btn btn-primary">Join Game</button>
-                        </form>
+            <div class="modal fade" id="myModal{{ game.room_code }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Enter Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="{% url 'join_game' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="room_code" value="{{ game.room_code }}">
+                                <label for="username">Username:</label>
+                                <input type="text" class="form-control" id="username" name="username" required>
+                                {% if game.is_private %}
+                                    <label for="password">Password:</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                {% endif %}
+                                <button type="submit" class="btn btn-primary">Join Game</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    {% endif %}
+    </div>
 {% endfor %}
-
 {% endblock %}
