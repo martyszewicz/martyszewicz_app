@@ -256,7 +256,6 @@
   right: 330px;
   animation: smokeOne 3s 1s linear infinite;
 }
-
 .coffee_medium::before{
     content: '';
     width: 90%;
