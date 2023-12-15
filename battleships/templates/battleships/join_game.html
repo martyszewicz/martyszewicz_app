@@ -1,32 +1,40 @@
 {% extends "battleships/base.html" %}
 
 {% block body %}
+
+<style>
+    .modal-content {
+        color: #000;
+        background-color: #fff;
+    }
+</style>
+
 {% for game in games %}
     <div class="row">
         <div class="col">
-            <p>{{ game.room_code }} {{game.game_creator}} {% if game.is_private %} (Private Game) {% else %} (Public Game) {% endif %}</p>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal{{ game.room_code }}">
+            <p>{{ game.room_name }} {{game.game_creator}} {% if game.is_private %} (Private Game) {% else %} (Public Game) {% endif %}</p>
+            <button type="button" class="btn btn-primary join-game" data-room-name="{{ game.room_name }}">
                 Join Game
             </button>
 
-            <div class="modal fade" id="myModal{{ game.room_code }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+            <div class="modal fade" id="myModal{{ game.room_name }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+               <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Enter Details</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Join Room: {{ game.room_name }}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form method="post" action="{% url 'join_game' %}">
                                 {% csrf_token %}
-                                <input type="hidden" name="room_code" value="{{ game.room_code }}">
-                                <label for="username">Username:</label>
-                                <input type="text" class="form-control" id="username" name="username" required>
+                                <input type="hidden" name="room_name" value="{{ game.room_name }}">
+                                <label for="modalUsernameInput">Username:</label>
+                                <input type="text" class="form-control" id="modalUsernameInput" name="username" placeholder="Enter your username" required>
                                 {% if game.is_private %}
                                     <label for="password">Password:</label>
-                                    <input type="password" class="form-control" id="password" name="password" required>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter the room password" required>
                                 {% endif %}
-                                <button type="submit" class="btn btn-primary">Join Game</button>
+                                <button type="submit" class="btn btn-primary" id="confirmUsernameBtn">Join Game</button>
                             </form>
                         </div>
                     </div>
@@ -35,4 +43,25 @@
         </div>
     </div>
 {% endfor %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.join-game').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var roomName = button.getAttribute('data-room-name');
+                $('#myModal' + roomName).modal('show');
+            });
+        });
+
+        document.getElementById('confirmUsernameBtn').addEventListener('click', function() {
+            var modalUsername = $('#modalUsernameInput').val();
+            var roomName = $('#myModal' + roomName).data('room-name');
+            $('#myModal' + roomName + ' #username').val(modalUsername);
+            $('#myModal' + roomName).modal('hide');
+        });
+    });
+</script>
+
+<button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'home' %}'">Main menu</button>
 {% endblock %}

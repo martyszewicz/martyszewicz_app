@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.views import View
 from .models import *
 from .forms import NewGameForm
+from django.contrib.auth import login
 
 
 class HomeView(View):
@@ -37,7 +38,7 @@ class NewGameView(View):
         form = NewGameForm(request.POST)
         if form.is_valid():
             username = request.POST.get('username')
-            room_code = request.POST.get('room_code')
+            room_name = request.POST.get('room_name')
             is_private = bool(form.cleaned_data.get('is_private', False))
             password = request.POST.get('password')
 
@@ -49,15 +50,23 @@ class NewGameView(View):
                 form = NewGameForm()
                 return render(request, 'battleships/new_game.html', {'form': form})
 
-            existing_game = Game.objects.filter(room_code=room_code).first()
+            existing_game = BattleshipsRoom.objects.filter(room_name=room_name).first()
             if existing_game:
                 messages.info(request, "Room code already exists. Please choose a different one.")
                 form = NewGameForm()
                 return render(request, 'battleships/new_game.html', {'form': form})
 
-            game = Game(game_creator=username, room_code=room_code, is_private=is_private, password=password)
+            user_exists = User.objects.filter(username=username).exists()
+
+            if user_exists:
+                messages.info(request, "A user with this name already exists. Please choose a different one.")
+                form = NewGameForm()
+                return render(request, 'battleships/new_game.html', {'form': form})
+            user = User.objects.create_user(username)
+            login(request, user)
+            game = BattleshipsRoom(game_creator=user, room_name=room_name, is_private=is_private, password=password)
             game.save()
-            return redirect('multi_player/' + room_code, username=username)
+            return redirect('multi_player/' + room_name)
         else:
             form = NewGameForm()
 
@@ -68,24 +77,24 @@ class JoinGameView(View):
     template_name = 'battleships/join_game.html'
 
     def get(self, request):
-        games = Game.objects.filter(status='waiting')
+        games = BattleshipsRoom.objects.filter(game_opponent=None)
         return render(request, self.template_name, {'games': games})
 
     def post(self, request):
         username = request.POST.get('username')
-        room_code = request.POST.get('room_code')
+        room_name = request.POST.get('room_name')
         password = request.POST.get('password')
 
         if not username:
             messages.error(request, "Please provide a username.")
             return redirect('join_game')
-
-        game = Game.objects.filter(room_code=room_code, status='waiting').first()
-
-        if game.game_creator == username:
-            messages.error(request, "Username already taken. Please choose a different one.")
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username already exists. Please choose a different one.")
             return redirect('join_game')
-
+        game = BattleshipsRoom.objects.filter(room_name=room_name).first()
+        if game.game_opponent is not None:
+            messages.info(request, "Game already started.")
+            return redirect('join_game')
         if game is None:
             messages.info(request, "Room code not found or game already started.")
             return redirect('join_game')
@@ -98,20 +107,25 @@ class JoinGameView(View):
             if password != game.password:
                 messages.info(request, "Wrong password")
                 return redirect('join_game')
-
-        game.game_opponent = username
-
-        return redirect('multi_player/' + room_code, username=username)
+        user = User.objects.create_user(username)
+        login(request, user)
+        game.game_opponent = user
+        game.save()
+        return redirect('multi_player/' + room_name)
 
 
 class Multi_player(View):
     template_name_multiplayer = 'battleships/multi_player.html'
 
-    def get(self, request, room_code=None, username=None):
-        form = NewGameForm(initial={'username': username})
+    def get(self, request, room_name=None):
+        username = request.user.username if request.user.is_authenticated else None
+
         if not username:
             return HttpResponse("Unauthorized", status=401)
 
-        game = Game.objects.get(room_code=room_code)
-        pdb.set_trace()
-        return render(request, self.template_name_multiplayer, {'room_code': room_code, 'username': username, 'game': game})
+        try:
+            game = BattleshipsRoom.objects.get(room_name=room_name)
+        except BattleshipsRoom.DoesNotExist:
+            return HttpResponse("Room not found", status=404)
+
+        return render(request, self.template_name_multiplayer, {'room_name': room_name, 'username': username, 'game': game})
