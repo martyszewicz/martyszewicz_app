@@ -1,12 +1,12 @@
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
-import battleships.routing
+import tictactoe.routing
 
 
 application = ProtocolTypeRouter({
     'websocket': AuthMiddlewareStack(
         URLRouter(
-            battleships.routing.websocket_urlpatterns
+            tictactoe.routing.websocket_urlpatterns
         )
     ),
 })

@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'mysite',
     'coffee_machine',
     'movies_collections',
-    'battleships',
+    'tictactoe',
 ]
 
 MIDDLEWARE = [

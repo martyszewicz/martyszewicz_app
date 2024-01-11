@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class BattleshipsRoom(models.Model):
+class TictactoeRoom(models.Model):
     game_creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_rooms', null=True)
     game_opponent = models.ForeignKey(User, on_delete=models.CASCADE, related_name='joined_rooms', null=True, blank=True, default=None)
     room_name = models.CharField(max_length=50)

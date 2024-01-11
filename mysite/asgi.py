@@ -12,7 +12,7 @@ import os
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
-import battleships.routing
+import tictactoe.routing
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
 
@@ -20,7 +20,7 @@ application = ProtocolTypeRouter({
     'http': get_asgi_application(),
     'websocket': AuthMiddlewareStack(
         URLRouter(
-            battleships.routing.websocket_urlpatterns
+            tictactoe.routing.websocket_urlpatterns
         )
     )
 })
@@ -31,7 +31,7 @@ application = ProtocolTypeRouter({
 # from django.urls import re_path
 # from channels.routing import ProtocolTypeRouter, URLRouter
 # from channels.auth import AuthMiddlewareStack
-# from battleships.consumers import GameRoom
+# from tictactoe.consumers import GameRoom
 # from django.core.asgi import get_asgi_application
 #
 # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
@@ -39,7 +39,7 @@ application = ProtocolTypeRouter({
 # http_application = get_asgi_application()
 #
 # ws_pattern = [
-#     re_path(r'^battleships/ws/game/(?P<room_code>\w+)/$', GameRoom.as_asgi()),
+#     re_path(r'^tictactoe/ws/game/(?P<room_code>\w+)/$', GameRoom.as_asgi()),
 # ]
 #
 # application = ProtocolTypeRouter(

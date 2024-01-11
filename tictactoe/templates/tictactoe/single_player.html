@@ -1,0 +1,12 @@
+{% extends "tictactoe/base.html" %}
+{% load static %}
+
+{% block body %}
+<link rel="stylesheet" href="{%static 'css/style.css' %}">
+<script>
+   let gameMode = 'singlePlayer'
+</script>
+<script src="{% static 'tictactoe/tictactoe.js' %}" charset="utf-8"></script>
+
+<button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'home' %}'">Main menu</button>
+{% endblock %}
