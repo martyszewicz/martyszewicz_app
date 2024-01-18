@@ -72,11 +72,20 @@ class GameRoom(AsyncWebsocketConsumer):
 
     async def update_players(self, event):
         players = await self.get_players()
+        game_creator = players['player1']
         opponent = players['player2']
 
         await self.send(text_data=json.dumps({
             'type': 'update_players',
+            'game_creator': game_creator,
             'opponent': opponent,
+        }))
+
+    async def game_end (self, event):
+        print("game over")
+        await self.send(text_data=json.dumps({
+            'type': event["type"],
+            'player': event["player"]
         }))
 
     async def system_message(self, event):
@@ -93,6 +102,16 @@ class GameRoom(AsyncWebsocketConsumer):
             message_type = text_data_json.get('type', '')
             print(f"Received message of type: {message_type}")
 
+            if message_type == 'game_end':
+                player = text_data_json['player']
+
+                await self.channel_layer.group_send(
+                    self.room_group_name,
+                    {
+                        'type': 'game_end',
+                        'player': player,
+                    })
+
             if message_type == 'chat_message':
                 message = text_data_json['message']
                 username = text_data_json['username']
@@ -104,6 +123,7 @@ class GameRoom(AsyncWebsocketConsumer):
                         'message': message,
                         'username': username,
                     })
+
             if message_type == "players_choice":
                 player = text_data_json['player']
                 index = text_data_json['index']
