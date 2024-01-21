@@ -1,5 +1,3 @@
-import pdb
-
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -7,6 +5,9 @@ from django.views import View
 from .models import *
 from .forms import NewGameForm
 from django.contrib.auth import login
+from django.utils.translation import gettext as _, activate
+from mysite import settings
+from django.urls import reverse
 
 
 class HomeView(View):
@@ -24,8 +25,18 @@ class HomeView(View):
         elif button_clicked == 'single_player':
             return render(request, "tictactoe/single_player.html")
 
-        messages.info(request, 'Something goes wrong, please try again')
+        messages.info(request, _('Coś poszło nie tak, spróbuj ponownie'))
         return render(request, self.template_name)
+
+
+class ChangeLanguageView(View):
+    def get(self, request, language_code):
+        if language_code in [lang[0] for lang in settings.LANGUAGES]:
+            request.session['django_language'] = language_code
+            activate(language_code)
+            return redirect(reverse('home'))
+        else:
+            return redirect(reverse('home'))
 
 
 class NewGameView(View):
@@ -46,20 +57,20 @@ class NewGameView(View):
                 password = ""
 
             if is_private and not password:
-                messages.error(request, "Please provide a password to make a game private.")
+                messages.error(request, _("Aby utworzyć prywatną grę proszę utworzyć hasło"))
                 form = NewGameForm()
                 return render(request, 'tictactoe/new_game.html', {'form': form})
 
             existing_game = TictactoeRoom.objects.filter(room_name=room_name).first()
             if existing_game:
-                messages.info(request, "Room code already exists. Please choose a different one.")
+                messages.info(request, _("Ta nazwa pokoju jest już zajęta. Podaj inną nazwę"))
                 form = NewGameForm()
                 return render(request, 'tictactoe/new_game.html', {'form': form})
 
             user_exists = User.objects.filter(username=username).exists()
 
             if user_exists:
-                messages.info(request, "A user with this name already exists. Please choose a different one.")
+                messages.info(request, _("Ten pseudonim już jest zajęty. Podaj inny pseudonim"))
                 form = NewGameForm()
                 return render(request, 'tictactoe/new_game.html', {'form': form})
             user = User.objects.create_user(username)
@@ -86,26 +97,26 @@ class JoinGameView(View):
         password = request.POST.get('password')
 
         if not username:
-            messages.error(request, "Please provide a username.")
+            messages.error(request, _("Proszę wprowadzić pseudonim"))
             return redirect('join_game')
         if User.objects.filter(username=username).exists():
-            messages.error(request, "Username already exists. Please choose a different one.")
+            messages.error(request, _("Ten pseudonim już jest zajęty. Podaj inny pseudonim"))
             return redirect('join_game')
         game = TictactoeRoom.objects.filter(room_name=room_name).first()
         if game.game_opponent is not None:
-            messages.info(request, "Game already started.")
+            messages.info(request, _("Gra już się rozpoczęła"))
             return redirect('join_game')
         if game is None:
-            messages.info(request, "Room code not found or game already started.")
+            messages.info(request, _("Nie znaleziono pokoju o tej nazwie lub gra już się rozpoczęła"))
             return redirect('join_game')
 
         if game.is_private:
             if not password:
-                messages.info(request, "Please provide a password")
+                messages.info(request, _("Proszę podać hasło"))
                 return redirect('join_game')
 
             if password != game.password:
-                messages.info(request, "Wrong password")
+                messages.info(request, _("Hasło nieprawidłowe"))
                 return redirect('join_game')
         user = User.objects.create_user(username)
         login(request, user)

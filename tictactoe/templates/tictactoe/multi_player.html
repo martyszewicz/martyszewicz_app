@@ -1,6 +1,6 @@
 {% extends "tictactoe/base.html" %}
 {% load static %}
-
+{% load i18n %}
 {% block body %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <script>
@@ -37,13 +37,13 @@
           <form id="chat-form">
             <div class="form-group">
                 <div id="defaultInfoMessage" class="h4 pt-2" style="height: 20px;"></div>
-                <label for="chat-text" class="h2 pt-2">Chat</label>
+                <label for="chat-text" class="h2 pt-2">{% trans 'Czat' %}</label>
                 <textarea class="form-control" id="chat-text" rows="10" readonly></textarea><br>
             </div>
             <div class="form-group">
                 <input class="form-control" id="input" type="text"><br>
             </div>
-            <input class="btn btn-primary" id="submit" type="button" value="Send">
+            <input class="btn btn-primary" id="submit" type="button" value="{% trans 'Wyślij' %}">
         </form>
         </div>
     </div>
@@ -52,7 +52,7 @@
 
 </div>
 
-<button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'home' %}'">Main menu</button>
+<button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'home' %}'">{% trans 'Menu główne' %}</button>
 
 {{ room_name|json_script:"room-name" }}
 {{ username|json_script:"user_username" }}

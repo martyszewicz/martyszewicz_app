@@ -1,6 +1,6 @@
 {% extends "tictactoe/base.html" %}
 {% load static %}
-
+{% load i18n %}
 {% block body %}
 <link rel="stylesheet" href="{%static 'css/style.css' %}">
 <script>
@@ -8,5 +8,27 @@
 </script>
 <script src="{% static 'tictactoe/tictactoe.js' %}" charset="utf-8"></script>
 
-<button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'home' %}'">Main menu</button>
+<div class="container" style="display: flex; justify-content: center; align-items: center;">
+    <div class="game flex-column">
+        <div class="h4 pt-2" style="height: 20px; display: flex; align-items: center;">
+            <div id="defaultInfoMessage" style="margin-left: 20px; margin-left: 10px; margin-top: 15px"></div>
+            <span id="spinner" class="spinner-border" role="status" style="margin-top: 15px; display: none;"></span>
+        </div>
+        <div class="boardcontainer" style="margin-top: 20px;">
+            <div class="board">
+                <div data-cell-index="0" class="space"></div>
+                <div data-cell-index="1" class="space"></div>
+                <div data-cell-index="2" class="space"></div>
+                <div data-cell-index="3" class="space"></div>
+                <div data-cell-index="4" class="space"></div>
+                <div data-cell-index="5" class="space"></div>
+                <div data-cell-index="6" class="space"></div>
+                <div data-cell-index="7" class="space"></div>
+                <div data-cell-index="8" class="space"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" class="btn btn-primary" style="margin-top: 20px;" onclick="window.location.href='{% url 'home' %}'">{% trans 'Menu główne' %}</button>
 {% endblock %}

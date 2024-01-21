@@ -1,5 +1,6 @@
 {% extends "tictactoe/base.html" %}
-
+{% load i18n %}
+{% load static %}
 {% block body %}
 
 <form method="post" action="{% url 'home' %}">
@@ -8,26 +9,43 @@
         <div class="row">
             <div class="col">
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary" type="submit" name="button_clicked" value="new_game">New game</button>
+                    <button class="btn btn-primary" type="submit" name="button_clicked" value="new_game">{% trans 'Nowa gra' %}</button>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <div class="d-grid gap-2 my-4">
-                    <button class="btn btn-primary" type="submit" name="button_clicked" value="join_game">Join Game</button>
+                    <button class="btn btn-primary" type="submit" name="button_clicked" value="join_game">{% trans 'Dołącz do gry' %}</button>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <div class="d-grid gap-2 my-4">
-                    <button class="btn btn-primary" type="submit" name="button_clicked" value="single_player">Single Player</button>
+                    <button class="btn btn-primary" type="submit" name="button_clicked" value="single_player">{% trans 'Gra dla jednego gracza' %}</button>
                 </div>
             </div>
         </div>
     </div>
 </form>
+
+<div class="ms-auto text-start">
+    <a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="#" role="button">
+        {% get_language_info for request.LANGUAGE_CODE as lang %}
+        <img src="{% static 'tictactoe/images/'|add:request.LANGUAGE_CODE|add:'.png' %}" alt="{{ lang.code }}">
+    </a>
+    <ul class="dropdown-menu dropdown-menu-center">
+        {% for code, language in LANGUAGES %}
+            <li>
+                <a class="dropdown-item" href="{% url 'change_language' code %}">
+                    <img src="{% static 'tictactoe/images/'|add:code|add:'.png' %}" alt="{{ code }}">
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
 
 
 {% endblock %}

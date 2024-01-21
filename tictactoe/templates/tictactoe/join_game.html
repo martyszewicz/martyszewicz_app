@@ -1,5 +1,5 @@
 {% extends "tictactoe/base.html" %}
-
+{% load i18n %}
 {% block body %}
 
 <style>
@@ -14,8 +14,8 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Room name</th>
-            <th scope="col">Room creator</th>
+            <th scope="col">{% trans 'Nazwa pokoju' %}</th>
+            <th scope="col">{% trans 'Założyciel pokoju' %}</th>
             <th scope="col"></th>
             <th scope="col"></th>
         </tr>
@@ -26,18 +26,18 @@
             <td class="table-info">{{ forloop.counter }}</td>
             <td class="table-info">{{ game.room_name }}</td>
             <td class="table-info">{{game.game_creator}}</td>
-            <td class="table-info">{% if game.is_private %} (Private Game) {% endif %}
+            <td class="table-info">{% if game.is_private %} {% trans '(Prywatna gra)' %} {% endif %}
             </td>
             <td class="table-info">
                 <button type="button" class="btn btn-primary join-game" data-room-name="{{ game.room_name }}">
-                Join Game
+                {% trans 'Dołącz' %}
                 </button>
 
                 <div class="modal fade" id="myModal{{ game.room_name }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Join Room: {{ game.room_name }}</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">{% trans 'Dołącz do pokoju' %}: {{ game.room_name }}</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -45,12 +45,12 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="room_name" value="{{ game.room_name }}">
                                     <label for="modalUsernameInput">Username:</label>
-                                    <input type="text" class="form-control" id="modalUsernameInput" name="username" placeholder="Enter your username" required>
+                                    <input type="text" class="form-control" id="modalUsernameInput" name="username" placeholder="{% trans 'Podaj swój pseudonim' %}" required>
                                     {% if game.is_private %}
-                                        <label for="password">Password:</label>
-                                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter the room password" required>
+                                        <label for="password">{% trans 'Hasło' %}:</label>
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="{% trans 'Podaj hasło' %}" required>
                                     {% endif %}
-                                    <button type="submit" class="btn btn-primary" id="confirmUsernameBtn">Join Game</button>
+                                    <button type="submit" class="btn btn-primary" id="confirmUsernameBtn">{% trans 'Dołącz do gry' %}</button>
                                 </form>
                             </div>
                         </div>
@@ -83,5 +83,5 @@
     });
 </script>
 
-<button type="button" class="btn btn-primary" style="margin-bottom: 30px;" onclick="window.location.href='{% url 'home' %}'">Main menu</button>
+<button type="button" class="btn btn-primary" style="margin-bottom: 30px;" onclick="window.location.href='{% url 'home' %}'">{% trans 'Menu główne' %}</button>
 {% endblock %}

@@ -2,6 +2,7 @@ from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
 from .models import TictactoeRoom
+from django.utils.translation import gettext as _
 
 
 class GameRoom(AsyncWebsocketConsumer):
@@ -30,7 +31,7 @@ class GameRoom(AsyncWebsocketConsumer):
                 self.room_group_name,
                 {
                     'type': 'system_message',
-                    'message': f'User {username} join to the room.',
+                    'message': _('Użytkownik {username} dołączył do pokoju.').format(username=username),
                 }
             )
 
@@ -38,14 +39,12 @@ class GameRoom(AsyncWebsocketConsumer):
 
     async def disconnect(self, close_code):
         username = await self.remove_user()
-        print("disconect")
-        print(username)
         if username:
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'system_message',
-                    'message': f'User {username} left the room.',
+                    'message': _('Użytkownik {username} opuścił.').format(username=username)
                 }
             )
         await self.channel_layer.group_discard(
@@ -82,25 +81,21 @@ class GameRoom(AsyncWebsocketConsumer):
         }))
 
     async def game_end (self, event):
-        print("game over")
         await self.send(text_data=json.dumps({
             'type': event["type"],
             'player': event["player"]
         }))
 
     async def system_message(self, event):
-        print("system message")
         await self.send(text_data=json.dumps({
             'type': event['type'],
             'message': event['message'],
         }))
 
     async def receive(self, text_data=None, bytes_data=None):
-        print(f'recievie {text_data}')
         try:
             text_data_json = json.loads(text_data)
             message_type = text_data_json.get('type', '')
-            print(f"Received message of type: {message_type}")
 
             if message_type == 'game_end':
                 player = text_data_json['player']
