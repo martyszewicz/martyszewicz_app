@@ -4,7 +4,17 @@
 {% block body %}
 <link rel="stylesheet" href="{%static 'css/style.css' %}">
 <script>
-   let gameMode = 'singlePlayer'
+   let gameMode = 'singlePlayer';
+   let translations = {
+       notYourTurn: "{% trans 'To nie Twoja runda' %}",
+       waitForOpponent: "{% trans 'Czekam na przeciwnika' %}",
+       computerThinks: "{% trans 'Komputer myśli' %}",
+       thisPlaceIsNotEmpty: "{% trans 'To miejsce jest zajęte' %}",
+       draw: "{% trans 'Remis' %}",
+       youWin: "{% trans 'Wygrałeś!' %}",
+       computerWin: "{% trans 'Komputer wygrał!' %}",
+       playerWin: "{% trans 'wygrywa gre' %}",
+   };
 </script>
 <script src="{% static 'tictactoe/tictactoe.js' %}" charset="utf-8"></script>
 

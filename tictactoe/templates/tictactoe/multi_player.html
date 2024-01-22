@@ -4,7 +4,15 @@
 {% block body %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <script>
-   let gameMode = 'multiPlayer'
+   let gameMode = 'multiPlayer';
+   let translations = {
+       notYourTurn: "{% trans 'To nie Twoja runda' %}",
+       waitForOpponent: "{% trans 'Czekam na przeciwnika' %}",
+       thisPlaceIsNotEmpty: "{% trans 'To miejsce jest zajęte' %}",
+       draw: "{% trans 'Remis' %}",
+       playerWin: "{% trans 'wygrywa gre' %}",
+       yourTurn: "{% trans 'Twoja kolej' %}",
+   };
 </script>
 <script src="{% static 'tictactoe/tictactoe.js' %}" charset="utf-8"></script>
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-08 11:02+0100\n"
+"POT-Creation-Date: 2024-01-22 11:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,26 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\movies_collections\api.py:62
+msgid "Ten film już jest zapisany w bibliotece 'Ulubione'"
+msgstr "Dieses Video ist bereits in Ihrer „Favoriten“-Bibliothek gespeichert"
+
+#: .\movies_collections\api.py:65
+msgid "Film zapisano pomyślnie w bibliotece 'Ulubione'"
+msgstr ""
+"Das Video wurde erfolgreich in Ihrer „Favoriten“-Bibliothek gespeichert"
+
+#: .\movies_collections\api.py:76
+#, python-brace-format
+msgid "Nie można połączyć z bazą danych, kod błędu: {error}"
+msgstr ""
+"Es konnte keine Verbindung zur Datenbank hergestellt werden, Fehlercode: "
+"{error}"
+
+#: .\movies_collections\api.py:86
+msgid "Film został pomyślnie usunięty z ulubionych"
+msgstr "Das Video wurde erfolgreich aus den Favoriten entfernt"
 
 #: .\movies_collections\forms.py:21
 msgid "Pole 'nazwa użytkownika' nie może być puste"
@@ -71,6 +91,41 @@ msgstr "Die neuen Passwörter stimmen nicht überein"
 msgid "Nowy adres email"
 msgstr "Neue E-Mail-Adresse"
 
+#: .\movies_collections\services.py:16
+#, python-brace-format
+msgid "Witaj {username}!"
+msgstr "Hallo {username}!"
+
+#: .\movies_collections\services.py:19
+msgid "Błąd logowania, spróbuj ponownie"
+msgstr "Anmeldefehler, bitte versuchen Sie es erneut"
+
+#: .\movies_collections\services.py:25
+msgid "Wylogowałeś się poprawnie"
+msgstr "Sie haben sich erfolgreich abgemeldet"
+
+#: .\movies_collections\services.py:35
+#, python-brace-format
+msgid "Użytkownik {username} został zarejestrowany"
+msgstr "Der Benutzer  {username} wurde registriert"
+
+#: .\movies_collections\services.py:40 .\movies_collections\services.py:73
+#, python-brace-format
+msgid "Błąd: {error}"
+msgstr "Fehler: {error}"
+
+#: .\movies_collections\services.py:66
+msgid "Dane użytkownika zostały zaktualizowane."
+msgstr "Benutzerdetails wurden aktualisiert."
+
+#: .\movies_collections\services.py:69
+msgid "Aktualne hasło jest nieprawidłowe."
+msgstr "Das aktuelle Passwort ist falsch."
+
+#: .\movies_collections\services.py:133 .\movies_collections\views.py:132
+msgid "Nie ma takiego użytkownika"
+msgstr "Es gibt keinen solchen Benutzer"
+
 #: .\movies_collections\templates\movies_collections\about.html:9
 #: .\movies_collections\templates\movies_collections\menu.html:43
 msgid "O aplikacji"
@@ -83,11 +138,12 @@ msgid ""
 "umiejętności na temat pracy z bazami danych, API oraz funkcjami logowania i "
 "tłumaczenia. Aplikacja powstała w języku Python oraz frameworku Django."
 msgstr ""
-"Der Autor der Anwendung ist Maciej Artyszewicz. Die Anwendung wurde zum Zweck "
-"des Erlernens der Entwicklung von Webanwendungen erstellt. Das Hauptziel war, "
-"das Wissen und die Fähigkeiten im Umgang mit Datenbanken, APIs sowie den "
-"Anmelde- und Übersetzungsfunktionen zu vertiefen. Die Anwendung wurde unter "
-"Verwendung von Python und dem Django-Framework entwickelt."
+"Der Autor der Anwendung ist Maciej Artyszewicz. Die Anwendung wurde zum "
+"Zweck des Erlernens der Entwicklung von Webanwendungen erstellt. Das "
+"Hauptziel war, das Wissen und die Fähigkeiten im Umgang mit Datenbanken, "
+"APIs sowie den Anmelde- und Übersetzungsfunktionen zu vertiefen. Die "
+"Anwendung wurde unter Verwendung von Python und dem Django-Framework "
+"entwickelt."
 
 #: .\movies_collections\templates\movies_collections\about.html:21
 msgid "Prawa autorskie"
@@ -98,14 +154,16 @@ msgid ""
 "Grafiki i loga wykorzystanie na stronie głównej aplikacji zostały pobrane z "
 "strony internetowej"
 msgstr ""
-"Die Grafiken und Logos, die auf der Startseite der Anwendung verwendet wurden, wurden von der Website heruntergeladen"
+"Die Grafiken und Logos, die auf der Startseite der Anwendung verwendet "
+"wurden, wurden von der Website heruntergeladen"
 
 #: .\movies_collections\templates\movies_collections\about.html:26
 msgid ""
 "Elementy te są pozbawione praw autorskich. Do pracy z API wykorzystano "
 "darmowe API z GitHuba'a"
 msgstr ""
-"Diese Elemente sind frei von Urheberrechten. Für die Arbeit mit der API wurden kostenlose APIs von GitHub verwendet"
+"Diese Elemente sind frei von Urheberrechten. Für die Arbeit mit der API "
+"wurden kostenlose APIs von GitHub verwendet"
 
 #: .\movies_collections\templates\movies_collections\edit_user.html:7
 msgid "Edytuj profil"
@@ -113,6 +171,7 @@ msgstr "Profil bearbeiten"
 
 #: .\movies_collections\templates\movies_collections\edit_user.html:34
 #: .\movies_collections\templates\movies_collections\new_user.html:41
+#: .\tictactoe\templates\tictactoe\multi_player.html:54
 msgid "Wyślij"
 msgstr "Senden"
 
@@ -161,7 +220,7 @@ msgstr "Möchten Sie das Video wirklich löschen"
 
 #: .\movies_collections\templates\movies_collections\favourites.html:65
 #: .\movies_collections\templates\movies_collections\users.html:18
-#: .\movies_collections\templates\movies_collections\users.html:80
+#: .\movies_collections\templates\movies_collections\users.html:81
 msgid "Usuń"
 msgstr "Löschen"
 
@@ -182,8 +241,8 @@ msgid ""
 "W prawym górnym rogu ekranu znajdziesz wyszukiwarkę filmów. Wyniki pochodzą "
 "z serwera IMDbOT"
 msgstr ""
-"In der oberen rechten Ecke des Bildschirms finden Sie eine Videosuchmaschine. Die Ergebnisse kommen "
-"vom IMDbOT-Server"
+"In der oberen rechten Ecke des Bildschirms finden Sie eine "
+"Videosuchmaschine. Die Ergebnisse kommen vom IMDbOT-Server"
 
 #: .\movies_collections\templates\movies_collections\index.html:42
 msgid "Dodawaj do ulubionych"
@@ -193,7 +252,8 @@ msgstr "Zu den Favoriten hinzufügen"
 msgid ""
 "Po założeniu konta będziesz mógł tworzyć własne kolekcje ulubionych filmów"
 msgstr ""
-"Nachdem Sie ein Konto erstellt haben, können Sie Ihre eigenen Sammlungen Ihrer Lieblingsvideos erstellen"
+"Nachdem Sie ein Konto erstellt haben, können Sie Ihre eigenen Sammlungen "
+"Ihrer Lieblingsvideos erstellen"
 
 #: .\movies_collections\templates\movies_collections\login.html:8
 msgid "Login"
@@ -201,12 +261,13 @@ msgstr "Login"
 
 #: .\movies_collections\templates\movies_collections\login.html:12
 #: .\movies_collections\templates\movies_collections\new_user.html:12
-#: .\movies_collections\templates\movies_collections\users.html:42
+#: .\movies_collections\templates\movies_collections\users.html:43
 msgid "Nazwa użytkownika"
 msgstr "Nutzername"
 
 #: .\movies_collections\templates\movies_collections\login.html:19
 #: .\movies_collections\templates\movies_collections\new_user.html:26
+#: .\tictactoe\templates\tictactoe\join_game.html:50
 msgid "Hasło"
 msgstr "Passwort"
 
@@ -310,7 +371,7 @@ msgid "Rejestracja nowego użytkownika"
 msgstr "Neue Benutzerregistrierung"
 
 #: .\movies_collections\templates\movies_collections\new_user.html:19
-#: .\movies_collections\templates\movies_collections\users.html:43
+#: .\movies_collections\templates\movies_collections\users.html:44
 msgid "Adres email"
 msgstr "E-Mail-Adresse"
 
@@ -326,119 +387,222 @@ msgstr "Nr"
 msgid "Ten profil zostanie usunięty:"
 msgstr "Dieses Profil wird gelöscht:"
 
-#: .\movies_collections\templates\movies_collections\users.html:44
+#: .\movies_collections\templates\movies_collections\users.html:45
 msgid "Czy jest aktywny"
 msgstr "Ist es aktiv"
 
-#: .\movies_collections\templates\movies_collections\users.html:45
+#: .\movies_collections\templates\movies_collections\users.html:46
 msgid "Uprawnienia administratora"
 msgstr "Administratorrechte"
 
-#: .\movies_collections\templates\movies_collections\users.html:46
+#: .\movies_collections\templates\movies_collections\users.html:47
 msgid "Akcje do wykonania"
 msgstr "Auszuführende Aktionen"
 
-#: .\movies_collections\templates\movies_collections\users.html:75
+#: .\movies_collections\templates\movies_collections\users.html:76
 msgid "Edycja"
 msgstr "Auflage"
 
-#: .\movies_collections\templates\movies_collections\users.html:78
+#: .\movies_collections\templates\movies_collections\users.html:79
 msgid "Czy na pewno usunąć użytkownika"
 msgstr "Sind Sie sicher, dass Sie den Benutzer löschen möchten?"
 
-#: .\movies_collections\views.py:38
-#, python-brace-format
-msgid "Witaj {username}!"
-msgstr "Hallo {username}!"
+#: .\movies_collections\views.py:146
+#, fuzzy, python-brace-format
+#| msgid "Hasło użytkownika {username} zostało zaktualizowane."
+msgid "Użytkownik {username} został zaktualizowany."
+msgstr "Das Passwort für {username} wurde aktualisiert."
 
-#: .\movies_collections\views.py:41
-msgid "Błąd logowania, spróbuj ponownie"
-msgstr "Anmeldefehler, bitte versuchen Sie es erneut"
-
-#: .\movies_collections\views.py:48
-msgid "Wylogowałeś się poprawnie"
-msgstr "Sie haben sich erfolgreich abgemeldet"
-
-#: .\movies_collections\views.py:59
-#, python-brace-format
-msgid "Użytkownik {username} został zarejestrowany"
-msgstr "Der Benutzer  {username} wurde registriert"
-
-#: .\movies_collections\views.py:63
-#, python-brace-format
-msgid "Błąd: {error}"
-msgstr "Fehler: {error}"
-
-#: .\movies_collections\views.py:89
-msgid "Dane użytkownika zostały zaktualizowane."
-msgstr "Benutzerdetails wurden aktualisiert."
-
-#: .\movies_collections\views.py:92
-msgid "Aktualne hasło jest nieprawidłowe."
-msgstr "Das aktuelle Passwort ist falsch."
-
-#: .\movies_collections\views.py:96 .\movies_collections\views.py:152
+#: .\movies_collections\views.py:151
 #, python-brace-format
 msgid "Błąd w polu '{field}': {error}"
 msgstr "Fehler im Feld '{field}': {error}"
 
-#: .\movies_collections\views.py:131 .\movies_collections\views.py:164
-msgid "Nie ma takiego użytkownika"
-msgstr "Es gibt keinen solchen Benutzer"
-
-#: .\movies_collections\views.py:142
-#, python-brace-format
-msgid "Adres email użytkownika {username} został zaktualizowany."
-msgstr "Die E-Mail-Adresse von {username} wurde aktualisiert."
-
-#: .\movies_collections\views.py:147
-#, python-brace-format
-msgid "Hasło użytkownika {username} zostało zaktualizowane."
-msgstr "Das Passwort für {username} wurde aktualisiert."
-
-#: .\movies_collections\views.py:169
+#: .\movies_collections\views.py:165
 #, python-brace-format
 msgid "Użytkownik '{username}' został pomyślnie usunięty"
 msgstr "Der Benutzer '{username}' wurde erfolgreich gelöscht"
 
-#: .\movies_collections\views.py:181
+#: .\movies_collections\views.py:183
 msgid "Proszę podać tytuł"
 msgstr "Bitte geben Sie einen Titel an"
 
-#: .\movies_collections\views.py:186 .\movies_collections\views.py:218
-#: .\movies_collections\views.py:245
+#: .\movies_collections\views.py:213
 #, python-brace-format
-msgid "Nie można połączyć z bazą danych, kod błędu: {error}"
-msgstr "Es konnte keine Verbindung zur Datenbank hergestellt werden, Fehlercode: {error}"
+msgid "Błąd podczas pobierania danych z API: {error}"
+msgstr ""
 
-#: .\movies_collections\views.py:206
-#, python-brace-format
-msgid "Błąd'{e}'"
-msgstr "Fehler '{e}'"
-
-#: .\movies_collections\views.py:230
-msgid "Ten film już jest zapisany w bibliotece 'Ulubione'"
-msgstr "Dieses Video ist bereits in Ihrer „Favoriten“-Bibliothek gespeichert"
-
-#: .\movies_collections\views.py:233
-msgid "Film zapisano pomyślnie w bibliotece 'Ulubione'"
-msgstr "Das Video wurde erfolgreich in Ihrer „Favoriten“-Bibliothek gespeichert"
-
-#: .\movies_collections\views.py:258
-msgid "Film został pomyślnie usunięty z ulubionych"
-msgstr "Das Video wurde erfolgreich aus den Favoriten entfernt"
-
-#: .\mysite\settings.py:111
+#: .\mysite\settings.py:125
 msgid "Polski"
 msgstr ""
 
-#: .\mysite\settings.py:112
+#: .\mysite\settings.py:126
 msgid "English"
 msgstr ""
 
-#: .\mysite\settings.py:113
+#: .\mysite\settings.py:127
 msgid "Deutsch"
 msgstr ""
+
+#: .\tictactoe\consumers.py:34
+#, fuzzy, python-brace-format
+#| msgid "Użytkownik {username} został zarejestrowany"
+msgid "Użytkownik {username} dołączył do pokoju."
+msgstr "Der Benutzer  {username} wurde registriert"
+
+#: .\tictactoe\consumers.py:47
+#, fuzzy, python-brace-format
+#| msgid "Użytkownik {username} został zarejestrowany"
+msgid "Użytkownik {username} opuścił."
+msgstr "Der Benutzer  {username} wurde registriert"
+
+#: .\tictactoe\templates\tictactoe\home.html:12
+msgid "Nowa gra"
+msgstr "Neues Spiel"
+
+#: .\tictactoe\templates\tictactoe\home.html:19
+#: .\tictactoe\templates\tictactoe\join_game.html:53
+msgid "Dołącz do gry"
+msgstr "Nimm am Spiel teil"
+
+#: .\tictactoe\templates\tictactoe\home.html:26
+msgid "Gra dla jednego gracza"
+msgstr "Einzelspieler-Spiel"
+
+#: .\tictactoe\templates\tictactoe\join_game.html:17
+#: .\tictactoe\templates\tictactoe\new_game.html:15
+msgid "Nazwa pokoju"
+msgstr "Raumname"
+
+#: .\tictactoe\templates\tictactoe\join_game.html:18
+msgid "Założyciel pokoju"
+msgstr "Raumgründer"
+
+#: .\tictactoe\templates\tictactoe\join_game.html:29
+msgid "(Prywatna gra)"
+msgstr "(Privates Spiel)"
+
+#: .\tictactoe\templates\tictactoe\join_game.html:33
+msgid "Dołącz"
+msgstr "Beitreten"
+
+#: .\tictactoe\templates\tictactoe\join_game.html:40
+msgid "Dołącz do pokoju"
+msgstr "Raum beitreten"
+
+#: .\tictactoe\templates\tictactoe\join_game.html:48
+#: .\tictactoe\templates\tictactoe\new_game.html:10
+msgid "Podaj swój pseudonim"
+msgstr "Trage deinen Spitznamen ein"
+
+#: .\tictactoe\templates\tictactoe\join_game.html:51
+#: .\tictactoe\templates\tictactoe\new_game.html:32
+msgid "Podaj hasło"
+msgstr "Passwort eingeben"
+
+#: .\tictactoe\templates\tictactoe\join_game.html:86
+#: .\tictactoe\templates\tictactoe\multi_player.html:63
+#: .\tictactoe\templates\tictactoe\new_game.html:42
+#: .\tictactoe\templates\tictactoe\single_player.html:43
+msgid "Menu główne"
+msgstr "Hauptmenü"
+
+#: .\tictactoe\templates\tictactoe\multi_player.html:9
+#: .\tictactoe\templates\tictactoe\single_player.html:9
+msgid "To nie Twoja runda"
+msgstr "Das ist nicht dein Zug"
+
+#: .\tictactoe\templates\tictactoe\multi_player.html:10
+#: .\tictactoe\templates\tictactoe\single_player.html:10
+msgid "Czekam na przeciwnika"
+msgstr "Ich warte auf einen Gegner"
+
+#: .\tictactoe\templates\tictactoe\multi_player.html:11
+#: .\tictactoe\templates\tictactoe\single_player.html:12
+msgid "To miejsce jest zajęte"
+msgstr "Dieser Platz ist besetzt"
+
+#: .\tictactoe\templates\tictactoe\multi_player.html:12
+#: .\tictactoe\templates\tictactoe\single_player.html:13
+msgid "Remis"
+msgstr "Unentschieden"
+
+#: .\tictactoe\templates\tictactoe\multi_player.html:13
+#: .\tictactoe\templates\tictactoe\single_player.html:16
+msgid "wygrywa gre"
+msgstr "gewinnt das Spiel"
+
+#: .\tictactoe\templates\tictactoe\multi_player.html:14
+msgid "Twoja kolej"
+msgstr "Du bist dran"
+
+#: .\tictactoe\templates\tictactoe\multi_player.html:48
+msgid "Czat"
+msgstr "Chat"
+
+#: .\tictactoe\templates\tictactoe\new_game.html:9
+msgid "Twój pseudonim"
+msgstr "Ihr Benutzername"
+
+#: .\tictactoe\templates\tictactoe\new_game.html:16
+msgid "Podaj nazwę pokoju"
+msgstr "Geben Sie den Raumnamen ein"
+
+#: .\tictactoe\templates\tictactoe\new_game.html:24
+msgid "Gra prywatna"
+msgstr "Privates Spiel"
+
+#: .\tictactoe\templates\tictactoe\new_game.html:38
+msgid "Utwórz pokój"
+msgstr "Erstelle einen Raum"
+
+#: .\tictactoe\templates\tictactoe\single_player.html:11
+msgid "Komputer myśli"
+msgstr "Der Computer denkt nach"
+
+#: .\tictactoe\templates\tictactoe\single_player.html:14
+msgid "Wygrałeś!"
+msgstr "Du hast gewonnen!"
+
+#: .\tictactoe\templates\tictactoe\single_player.html:15
+msgid "Komputer wygrał!"
+msgstr "Der Computer hat gewonnen!"
+
+#: .\tictactoe\views.py:28
+msgid "Coś poszło nie tak, spróbuj ponownie"
+msgstr "Da ist etwas schiefgelaufen, versuche es erneut"
+
+#: .\tictactoe\views.py:60
+msgid "Aby utworzyć prywatną grę proszę utworzyć hasło"
+msgstr "Um ein privates Spiel zu erstellen, gib bitte ein Passwort an"
+
+#: .\tictactoe\views.py:66
+msgid "Ta nazwa pokoju jest już zajęta. Podaj inną nazwę"
+msgstr "Dieser Raumname ist bereits vergeben. Bitte gib einen anderen Namen an"
+
+#: .\tictactoe\views.py:73 .\tictactoe\views.py:103
+msgid "Ten pseudonim już jest zajęty. Podaj inny pseudonim"
+msgstr "Dieser Spitzname ist bereits vergeben. Gib einen anderen Spitznamen an"
+
+#: .\tictactoe\views.py:100
+msgid "Proszę wprowadzić pseudonim"
+msgstr "Bitte gib einen Spitznamen ein"
+
+#: .\tictactoe\views.py:107
+msgid "Gra już się rozpoczęła"
+msgstr "Das Spiel hat bereits begonnen"
+
+#: .\tictactoe\views.py:110
+msgid "Nie znaleziono pokoju o tej nazwie lub gra już się rozpoczęła"
+msgstr "Kein Raum mit diesem Namen gefunden oder das Spiel hat bereits begonnen"
+
+#: .\tictactoe\views.py:115
+msgid "Proszę podać hasło"
+msgstr "Bitte geben Sie das Passwort ein"
+
+#: .\tictactoe\views.py:119
+msgid "Hasło nieprawidłowe"
+msgstr "Falsches Passwort"
 
 #: .\venv\Lib\site-packages\django\contrib\messages\apps.py:15
 msgid "Messages"
@@ -1646,3 +1810,11 @@ msgstr ""
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:248
 msgid "Connect, get help, or contribute"
 msgstr ""
+
+#, python-brace-format
+#~ msgid "Adres email użytkownika {username} został zaktualizowany."
+#~ msgstr "Die E-Mail-Adresse von {username} wurde aktualisiert."
+
+#, python-brace-format
+#~ msgid "Błąd'{e}'"
+#~ msgstr "Fehler '{e}'"

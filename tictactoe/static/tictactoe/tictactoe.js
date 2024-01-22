@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (user_username === game_creator){
                     playersTurn = true
                 }
-            document.getElementById('opponent').innerText = opponent ? 'X: ' + opponent : "{% trans 'Czekam na przeciwnika' %}";
+            document.getElementById('opponent').innerText = opponent ? 'X: ' + opponent : translations.waitForOpponent;
         }
     }
 
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (playersTurn){
                         setText(event.currentTarget.getAttribute('data-cell-index'), user_username);
                     } else {
-                        show_info("{% trans 'To nie Twoja runda' %}")
+                        show_info(translations.notYourTurn)
                     }
                 }
             });
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 checkWon("O")
                 if (gameOver){
                     return}
-                show_info("{% trans 'Komputer myśli' %}", true)
+                show_info(translations.computerThinks, true)
                 setTimeout(function() {
                     infoMessageDom.innerText = '';
                     spinner.style.display = 'none';
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     playersTurn = true
                     }, 1000);
             }else{
-                show_info ("{% trans 'To miejsce jest zajęte' %}")
+                show_info (translations.thisPlaceIsNotEmpty)
                 setTimeout(function() {
                     infoMessageDom.innerText = " ";
                     }, 1000);
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
 
             if (count >= 9){
-                show_info("{% trans 'Remis' %}");
+                show_info(translations.draw);
                 gameOver = true
             }
         }
@@ -146,9 +146,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (win) {
                 if (value === "O"){
-                    show_info ("{% trans 'Wygrałeś!' %}")
+                    show_info (translations.youWin)
                 } else {
-                    show_info("{% trans 'Komputer wygrał!' %}")
+                    show_info(translations.computerWin)
                 };
                 gameOver = true
             }
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             setText(event.currentTarget.getAttribute('data-cell-index'), user_username);
                         }
                     } else {
-                        show_info("{% trans 'To nie Twoja runda' %}")
+                        show_info(translations.notYourTurn)
                     }
                 }
             });
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 show_info ("")
                 checkWon(user_username, value)
             }else{
-                show_info ("{% trans 'To miejsce jest zajęte' %}")
+                show_info (translations.thisPlaceIsNotEmpty)
                 setTimeout(function() {
                     infoMessageDom.innerText = " ";
                     }, 1000);
@@ -292,14 +292,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     setTextFromOpponent(data.index, data.player, data.value)
                     if (data.player !== user_username) {
                         playersTurn = true;
-                        show_info ("{% trans 'Twoja kolej' %}");
+                        show_info (translations.yourTurn);
                     }
                     break;
                 case "game_end":
                     if (data.player === "draw"){
-                        show_info("{% trans 'Remis' %}");
+                        show_info(translations.draw);
                     } else {
-                        show_info(data.player + "{% trans 'wygrywa gre' %}");
+                        show_info(data.player + translations.playerWin);
                     }
                     gameOver = true;
                     break;

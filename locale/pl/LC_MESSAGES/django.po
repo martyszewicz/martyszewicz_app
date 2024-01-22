@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-07 21:30+0100\n"
+"POT-Creation-Date: 2024-01-22 11:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,23 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
 "%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
 "%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+
+#: .\movies_collections\api.py:62
+msgid "Ten film już jest zapisany w bibliotece 'Ulubione'"
+msgstr "Ten film już jest zapisany w bibliotece 'Ulubione'"
+
+#: .\movies_collections\api.py:65
+msgid "Film zapisano pomyślnie w bibliotece 'Ulubione'"
+msgstr "Film zapisano pomyślnie w bibliotece 'Ulubione'"
+
+#: .\movies_collections\api.py:76
+#, python-brace-format
+msgid "Nie można połączyć z bazą danych, kod błędu: {error}"
+msgstr "Nie można połączyć z bazą danych, kod błędu: {error}"
+
+#: .\movies_collections\api.py:86
+msgid "Film został pomyślnie usunięty z ulubionych"
+msgstr "Film został pomyślnie usunięty z ulubionych"
 
 #: .\movies_collections\forms.py:21
 msgid "Pole 'nazwa użytkownika' nie może być puste"
@@ -73,6 +90,41 @@ msgstr "Nowe hasła nie pasują do siebie"
 msgid "Nowy adres email"
 msgstr "Nowy adres email"
 
+#: .\movies_collections\services.py:16
+#, python-brace-format
+msgid "Witaj {username}!"
+msgstr "Witaj {username}!"
+
+#: .\movies_collections\services.py:19
+msgid "Błąd logowania, spróbuj ponownie"
+msgstr "Błąd logowania, spróbuj ponownie"
+
+#: .\movies_collections\services.py:25
+msgid "Wylogowałeś się poprawnie"
+msgstr "Wylogowałeś się poprawnie"
+
+#: .\movies_collections\services.py:35
+#, python-brace-format
+msgid "Użytkownik {username} został zarejestrowany"
+msgstr "Użytkownik {username} został zarejestrowany"
+
+#: .\movies_collections\services.py:40 .\movies_collections\services.py:73
+#, python-brace-format
+msgid "Błąd: {error}"
+msgstr "Błąd: {error}"
+
+#: .\movies_collections\services.py:66
+msgid "Dane użytkownika zostały zaktualizowane."
+msgstr "Dane użytkownika zostały zaktualizowane."
+
+#: .\movies_collections\services.py:69
+msgid "Aktualne hasło jest nieprawidłowe."
+msgstr "Aktualne hasło jest nieprawidłowe."
+
+#: .\movies_collections\services.py:133 .\movies_collections\views.py:132
+msgid "Nie ma takiego użytkownika"
+msgstr "Nie ma takiego użytkownika"
+
 #: .\movies_collections\templates\movies_collections\about.html:9
 #: .\movies_collections\templates\movies_collections\menu.html:43
 msgid "O aplikacji"
@@ -116,6 +168,7 @@ msgstr "Edytuj profil"
 
 #: .\movies_collections\templates\movies_collections\edit_user.html:34
 #: .\movies_collections\templates\movies_collections\new_user.html:41
+#: .\tictactoe\templates\tictactoe\multi_player.html:54
 msgid "Wyślij"
 msgstr "Wyślij"
 
@@ -164,7 +217,7 @@ msgstr "Czy na pewno usunąć film"
 
 #: .\movies_collections\templates\movies_collections\favourites.html:65
 #: .\movies_collections\templates\movies_collections\users.html:18
-#: .\movies_collections\templates\movies_collections\users.html:80
+#: .\movies_collections\templates\movies_collections\users.html:81
 msgid "Usuń"
 msgstr "Usuń"
 
@@ -204,12 +257,13 @@ msgstr "Login"
 
 #: .\movies_collections\templates\movies_collections\login.html:12
 #: .\movies_collections\templates\movies_collections\new_user.html:12
-#: .\movies_collections\templates\movies_collections\users.html:42
+#: .\movies_collections\templates\movies_collections\users.html:43
 msgid "Nazwa użytkownika"
 msgstr "Nazwa użytkownika"
 
 #: .\movies_collections\templates\movies_collections\login.html:19
 #: .\movies_collections\templates\movies_collections\new_user.html:26
+#: .\tictactoe\templates\tictactoe\join_game.html:50
 msgid "Hasło"
 msgstr "Hasło"
 
@@ -313,7 +367,7 @@ msgid "Rejestracja nowego użytkownika"
 msgstr "Rejestracja nowego użytkownika"
 
 #: .\movies_collections\templates\movies_collections\new_user.html:19
-#: .\movies_collections\templates\movies_collections\users.html:43
+#: .\movies_collections\templates\movies_collections\users.html:44
 msgid "Adres email"
 msgstr "Adres email"
 
@@ -329,119 +383,222 @@ msgstr "Nr"
 msgid "Ten profil zostanie usunięty:"
 msgstr "Ten profil zostanie usunięty:"
 
-#: .\movies_collections\templates\movies_collections\users.html:44
+#: .\movies_collections\templates\movies_collections\users.html:45
 msgid "Czy jest aktywny"
 msgstr "Czy jest aktywny"
 
-#: .\movies_collections\templates\movies_collections\users.html:45
+#: .\movies_collections\templates\movies_collections\users.html:46
 msgid "Uprawnienia administratora"
 msgstr "Uprawnienia administratora"
 
-#: .\movies_collections\templates\movies_collections\users.html:46
+#: .\movies_collections\templates\movies_collections\users.html:47
 msgid "Akcje do wykonania"
 msgstr "Akcje do wykonania"
 
-#: .\movies_collections\templates\movies_collections\users.html:75
+#: .\movies_collections\templates\movies_collections\users.html:76
 msgid "Edycja"
 msgstr "Edycja"
 
-#: .\movies_collections\templates\movies_collections\users.html:78
+#: .\movies_collections\templates\movies_collections\users.html:79
 msgid "Czy na pewno usunąć użytkownika"
 msgstr "Czy na pewno usunąć użytkownika"
 
-#: .\movies_collections\views.py:38
-#, python-brace-format
-msgid "Witaj {username}!"
-msgstr "Witaj {username}!"
+#: .\movies_collections\views.py:146
+#, fuzzy, python-brace-format
+#| msgid "Hasło użytkownika {username} zostało zaktualizowane."
+msgid "Użytkownik {username} został zaktualizowany."
+msgstr "Hasło użytkownika {username} zostało zaktualizowane."
 
-#: .\movies_collections\views.py:41
-msgid "Błąd logowania, spróbuj ponownie"
-msgstr "Błąd logowania, spróbuj ponownie"
-
-#: .\movies_collections\views.py:48
-msgid "Wylogowałeś się poprawnie"
-msgstr "Wylogowałeś się poprawnie"
-
-#: .\movies_collections\views.py:59
-#, python-brace-format
-msgid "Użytkownik {username} został zarejestrowany"
-msgstr "Użytkownik {username} został zarejestrowany"
-
-#: .\movies_collections\views.py:63
-#, python-brace-format
-msgid "Błąd: {error}"
-msgstr "Błąd: {error}"
-
-#: .\movies_collections\views.py:89
-msgid "Dane użytkownika zostały zaktualizowane."
-msgstr "Dane użytkownika zostały zaktualizowane."
-
-#: .\movies_collections\views.py:92
-msgid "Aktualne hasło jest nieprawidłowe."
-msgstr "Aktualne hasło jest nieprawidłowe."
-
-#: .\movies_collections\views.py:96 .\movies_collections\views.py:152
+#: .\movies_collections\views.py:151
 #, python-brace-format
 msgid "Błąd w polu '{field}': {error}"
 msgstr "Błąd w polu '{field}': {error}"
 
-#: .\movies_collections\views.py:131 .\movies_collections\views.py:164
-msgid "Nie ma takiego użytkownika"
-msgstr "Nie ma takiego użytkownika"
-
-#: .\movies_collections\views.py:142
-#, python-brace-format
-msgid "Adres email użytkownika {username} został zaktualizowany."
-msgstr "Adres email użytkownika {username} został zaktualizowany."
-
-#: .\movies_collections\views.py:147
-#, python-brace-format
-msgid "Hasło użytkownika {username} zostało zaktualizowane."
-msgstr "Hasło użytkownika {username} zostało zaktualizowane."
-
-#: .\movies_collections\views.py:169
+#: .\movies_collections\views.py:165
 #, python-brace-format
 msgid "Użytkownik '{username}' został pomyślnie usunięty"
 msgstr "Użytkownik '{username}' został pomyślnie usunięty"
 
-#: .\movies_collections\views.py:181
+#: .\movies_collections\views.py:183
 msgid "Proszę podać tytuł"
 msgstr "Proszę podać tytuł"
 
-#: .\movies_collections\views.py:186 .\movies_collections\views.py:218
-#: .\movies_collections\views.py:245
+#: .\movies_collections\views.py:213
 #, python-brace-format
-msgid "Nie można połączyć z bazą danych, kod błędu: {error}"
-msgstr "Nie można połączyć z bazą danych, kod błędu: {error}"
+msgid "Błąd podczas pobierania danych z API: {error}"
+msgstr "Błąd podczas pobierania danych z API: {error}"
 
-#: .\movies_collections\views.py:206
-#, python-brace-format
-msgid "Błąd'{e}'"
-msgstr "Błąd'{e}'"
-
-#: .\movies_collections\views.py:230
-msgid "Ten film już jest zapisany w bibliotece 'Ulubione'"
-msgstr "Ten film już jest zapisany w bibliotece 'Ulubione'"
-
-#: .\movies_collections\views.py:233
-msgid "Film zapisano pomyślnie w bibliotece 'Ulubione'"
-msgstr "Film zapisano pomyślnie w bibliotece 'Ulubione'"
-
-#: .\movies_collections\views.py:258
-msgid "Film został pomyślnie usunięty z ulubionych"
-msgstr "Film został pomyślnie usunięty z ulubionych"
-
-#: .\mysite\settings.py:111
+#: .\mysite\settings.py:125
 msgid "Polski"
 msgstr "Polski"
 
-#: .\mysite\settings.py:112
+#: .\mysite\settings.py:126
 msgid "English"
 msgstr "English"
 
-#: .\mysite\settings.py:113
+#: .\mysite\settings.py:127
 msgid "Deutsch"
 msgstr "Deutsch"
+
+#: .\tictactoe\consumers.py:34
+#, fuzzy, python-brace-format
+#| msgid "Użytkownik {username} został zarejestrowany"
+msgid "Użytkownik {username} dołączył do pokoju."
+msgstr "Użytkownik {username} został zarejestrowany"
+
+#: .\tictactoe\consumers.py:47
+#, fuzzy, python-brace-format
+#| msgid "Użytkownik {username} został zarejestrowany"
+msgid "Użytkownik {username} opuścił."
+msgstr "Użytkownik {username} został zarejestrowany"
+
+#: .\tictactoe\templates\tictactoe\home.html:12
+msgid "Nowa gra"
+msgstr "Nowa gra"
+
+#: .\tictactoe\templates\tictactoe\home.html:19
+#: .\tictactoe\templates\tictactoe\join_game.html:53
+msgid "Dołącz do gry"
+msgstr "Dołącz do gry"
+
+#: .\tictactoe\templates\tictactoe\home.html:26
+msgid "Gra dla jednego gracza"
+msgstr "Gra dla jednego gracza"
+
+#: .\tictactoe\templates\tictactoe\join_game.html:17
+#: .\tictactoe\templates\tictactoe\new_game.html:15
+msgid "Nazwa pokoju"
+msgstr "Nazwa pokoju"
+
+#: .\tictactoe\templates\tictactoe\join_game.html:18
+msgid "Założyciel pokoju"
+msgstr "Założyciel pokoju"
+
+#: .\tictactoe\templates\tictactoe\join_game.html:29
+msgid "(Prywatna gra)"
+msgstr "(Prywatna gra)"
+
+#: .\tictactoe\templates\tictactoe\join_game.html:33
+msgid "Dołącz"
+msgstr "Dołącz"
+
+#: .\tictactoe\templates\tictactoe\join_game.html:40
+msgid "Dołącz do pokoju"
+msgstr "Dołącz do pokoju"
+
+#: .\tictactoe\templates\tictactoe\join_game.html:48
+#: .\tictactoe\templates\tictactoe\new_game.html:10
+msgid "Podaj swój pseudonim"
+msgstr "Podaj swój pseudonim"
+
+#: .\tictactoe\templates\tictactoe\join_game.html:51
+#: .\tictactoe\templates\tictactoe\new_game.html:32
+msgid "Podaj hasło"
+msgstr "Podaj hasło"
+
+#: .\tictactoe\templates\tictactoe\join_game.html:86
+#: .\tictactoe\templates\tictactoe\multi_player.html:63
+#: .\tictactoe\templates\tictactoe\new_game.html:42
+#: .\tictactoe\templates\tictactoe\single_player.html:43
+msgid "Menu główne"
+msgstr "Menu główne"
+
+#: .\tictactoe\templates\tictactoe\multi_player.html:9
+#: .\tictactoe\templates\tictactoe\single_player.html:9
+msgid "To nie Twoja runda"
+msgstr "To nie Twoja runda"
+
+#: .\tictactoe\templates\tictactoe\multi_player.html:10
+#: .\tictactoe\templates\tictactoe\single_player.html:10
+msgid "Czekam na przeciwnika"
+msgstr "Czekam na przeciwnika"
+
+#: .\tictactoe\templates\tictactoe\multi_player.html:11
+#: .\tictactoe\templates\tictactoe\single_player.html:12
+msgid "To miejsce jest zajęte"
+msgstr "To miejsce jest zajęte"
+
+#: .\tictactoe\templates\tictactoe\multi_player.html:12
+#: .\tictactoe\templates\tictactoe\single_player.html:13
+msgid "Remis"
+msgstr "Remis"
+
+#: .\tictactoe\templates\tictactoe\multi_player.html:13
+#: .\tictactoe\templates\tictactoe\single_player.html:16
+msgid "wygrywa gre"
+msgstr "wygrywa gre"
+
+#: .\tictactoe\templates\tictactoe\multi_player.html:14
+msgid "Twoja kolej"
+msgstr "Twoja kolej"
+
+#: .\tictactoe\templates\tictactoe\multi_player.html:48
+msgid "Czat"
+msgstr "Czat"
+
+#: .\tictactoe\templates\tictactoe\new_game.html:9
+msgid "Twój pseudonim"
+msgstr "Twój pseudonim"
+
+#: .\tictactoe\templates\tictactoe\new_game.html:16
+msgid "Podaj nazwę pokoju"
+msgstr "Podaj nazwę pokoju"
+
+#: .\tictactoe\templates\tictactoe\new_game.html:24
+msgid "Gra prywatna"
+msgstr "Gra prywatna"
+
+#: .\tictactoe\templates\tictactoe\new_game.html:38
+msgid "Utwórz pokój"
+msgstr "Utwórz pokój"
+
+#: .\tictactoe\templates\tictactoe\single_player.html:11
+msgid "Komputer myśli"
+msgstr "Komputer myśli"
+
+#: .\tictactoe\templates\tictactoe\single_player.html:14
+msgid "Wygrałeś!"
+msgstr "Wygrałeś!"
+
+#: .\tictactoe\templates\tictactoe\single_player.html:15
+msgid "Komputer wygrał!"
+msgstr "Komputer wygrał!"
+
+#: .\tictactoe\views.py:28
+msgid "Coś poszło nie tak, spróbuj ponownie"
+msgstr "Coś poszło nie tak, spróbuj ponownie"
+
+#: .\tictactoe\views.py:60
+msgid "Aby utworzyć prywatną grę proszę utworzyć hasło"
+msgstr "Aby utworzyć prywatną grę proszę utworzyć hasło"
+
+#: .\tictactoe\views.py:66
+msgid "Ta nazwa pokoju jest już zajęta. Podaj inną nazwę"
+msgstr "Ta nazwa pokoju jest już zajęta. Podaj inną nazwę"
+
+#: .\tictactoe\views.py:73 .\tictactoe\views.py:103
+msgid "Ten pseudonim już jest zajęty. Podaj inny pseudonim"
+msgstr "Ten pseudonim już jest zajęty. Podaj inny pseudonim"
+
+#: .\tictactoe\views.py:100
+msgid "Proszę wprowadzić pseudonim"
+msgstr "Proszę wprowadzić pseudonim"
+
+#: .\tictactoe\views.py:107
+msgid "Gra już się rozpoczęła"
+msgstr "Gra już się rozpoczęła"
+
+#: .\tictactoe\views.py:110
+msgid "Nie znaleziono pokoju o tej nazwie lub gra już się rozpoczęła"
+msgstr "Nie znaleziono pokoju o tej nazwie lub gra już się rozpoczęła"
+
+#: .\tictactoe\views.py:115
+msgid "Proszę podać hasło"
+msgstr "Proszę podać hasło"
+
+#: .\tictactoe\views.py:119
+msgid "Hasło nieprawidłowe"
+msgstr "Hasło nieprawidłowe"
 
 #: .\venv\Lib\site-packages\django\contrib\messages\apps.py:15
 msgid "Messages"
@@ -1649,3 +1806,11 @@ msgstr ""
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:248
 msgid "Connect, get help, or contribute"
 msgstr ""
+
+#, python-brace-format
+#~ msgid "Adres email użytkownika {username} został zaktualizowany."
+#~ msgstr "Adres email użytkownika {username} został zaktualizowany."
+
+#, python-brace-format
+#~ msgid "Błąd'{e}'"
+#~ msgstr "Błąd'{e}'"
