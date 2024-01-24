@@ -24,27 +24,3 @@ application = ProtocolTypeRouter({
         )
     )
 })
-
-
-#
-# import os
-# from django.urls import re_path
-# from channels.routing import ProtocolTypeRouter, URLRouter
-# from channels.auth import AuthMiddlewareStack
-# from tictactoe.consumers import GameRoom
-# from django.core.asgi import get_asgi_application
-#
-# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
-#
-# http_application = get_asgi_application()
-#
-# ws_pattern = [
-#     re_path(r'^tictactoe/ws/game/(?P<room_code>\w+)/$', GameRoom.as_asgi()),
-# ]
-#
-# application = ProtocolTypeRouter(
-#     {
-#         'http': get_asgi_application(),
-#         'websocket': AuthMiddlewareStack(URLRouter(ws_pattern)),
-#     }
-# )

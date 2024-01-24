@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-22 11:26+0100\n"
+"POT-Creation-Date: 2024-01-24 11:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -168,7 +168,7 @@ msgstr "Edytuj profil"
 
 #: .\movies_collections\templates\movies_collections\edit_user.html:34
 #: .\movies_collections\templates\movies_collections\new_user.html:41
-#: .\tictactoe\templates\tictactoe\multi_player.html:54
+#: .\tictactoe\templates\tictactoe\multi_player.html:56
 msgid "Wyślij"
 msgstr "Wyślij"
 
@@ -404,10 +404,9 @@ msgid "Czy na pewno usunąć użytkownika"
 msgstr "Czy na pewno usunąć użytkownika"
 
 #: .\movies_collections\views.py:146
-#, fuzzy, python-brace-format
-#| msgid "Hasło użytkownika {username} zostało zaktualizowane."
+#, python-brace-format
 msgid "Użytkownik {username} został zaktualizowany."
-msgstr "Hasło użytkownika {username} zostało zaktualizowane."
+msgstr "{username} został zaktualizowany."
 
 #: .\movies_collections\views.py:151
 #, python-brace-format
@@ -439,18 +438,6 @@ msgstr "English"
 #: .\mysite\settings.py:127
 msgid "Deutsch"
 msgstr "Deutsch"
-
-#: .\tictactoe\consumers.py:34
-#, fuzzy, python-brace-format
-#| msgid "Użytkownik {username} został zarejestrowany"
-msgid "Użytkownik {username} dołączył do pokoju."
-msgstr "Użytkownik {username} został zarejestrowany"
-
-#: .\tictactoe\consumers.py:47
-#, fuzzy, python-brace-format
-#| msgid "Użytkownik {username} został zarejestrowany"
-msgid "Użytkownik {username} opuścił."
-msgstr "Użytkownik {username} został zarejestrowany"
 
 #: .\tictactoe\templates\tictactoe\home.html:12
 msgid "Nowa gra"
@@ -486,6 +473,10 @@ msgstr "Dołącz"
 msgid "Dołącz do pokoju"
 msgstr "Dołącz do pokoju"
 
+#: .\tictactoe\templates\tictactoe\join_game.html:47
+msgid "Pseudonim"
+msgstr "Pseudonim"
+
 #: .\tictactoe\templates\tictactoe\join_game.html:48
 #: .\tictactoe\templates\tictactoe\new_game.html:10
 msgid "Podaj swój pseudonim"
@@ -497,7 +488,7 @@ msgid "Podaj hasło"
 msgstr "Podaj hasło"
 
 #: .\tictactoe\templates\tictactoe\join_game.html:86
-#: .\tictactoe\templates\tictactoe\multi_player.html:63
+#: .\tictactoe\templates\tictactoe\multi_player.html:65
 #: .\tictactoe\templates\tictactoe\new_game.html:42
 #: .\tictactoe\templates\tictactoe\single_player.html:43
 msgid "Menu główne"
@@ -532,7 +523,15 @@ msgstr "wygrywa gre"
 msgid "Twoja kolej"
 msgstr "Twoja kolej"
 
-#: .\tictactoe\templates\tictactoe\multi_player.html:48
+#: .\tictactoe\templates\tictactoe\multi_player.html:15
+msgid "dołączył do pokoju"
+msgstr "dołączył do pokoju"
+
+#: .\tictactoe\templates\tictactoe\multi_player.html:16
+msgid "opuścił pokój"
+msgstr "opuścił pokój"
+
+#: .\tictactoe\templates\tictactoe\multi_player.html:50
 msgid "Czat"
 msgstr "Czat"
 
@@ -1806,6 +1805,14 @@ msgstr ""
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:248
 msgid "Connect, get help, or contribute"
 msgstr ""
+
+#, python-brace-format
+#~ msgid "Użytkownik {username} dołączył do pokoju."
+#~ msgstr "Użytkownik {username} dołączył do pokoju"
+
+#, python-brace-format
+#~ msgid "Użytkownik {username} opuścił pokój."
+#~ msgstr "Użytkownik {username} opuścił pokój"
 
 #, python-brace-format
 #~ msgid "Adres email użytkownika {username} został zaktualizowany."

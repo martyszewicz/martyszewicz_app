@@ -2,11 +2,12 @@ from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
 from .models import TictactoeRoom
-from django.utils.translation import gettext as _
 
 
 class GameRoom(AsyncWebsocketConsumer):
+
     async def connect(self):
+
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'room_%s' % self.room_name
 
@@ -31,7 +32,7 @@ class GameRoom(AsyncWebsocketConsumer):
                 self.room_group_name,
                 {
                     'type': 'system_message',
-                    'message': _('Użytkownik {username} dołączył do pokoju.').format(username=username),
+                    'message': f'{username} join'
                 }
             )
 
@@ -40,11 +41,12 @@ class GameRoom(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
         username = await self.remove_user()
         if username:
+
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'system_message',
-                    'message': _('Użytkownik {username} opuścił.').format(username=username)
+                    'message': f'{username} left'
                 }
             )
         await self.channel_layer.group_discard(
@@ -96,7 +98,8 @@ class GameRoom(AsyncWebsocketConsumer):
         try:
             text_data_json = json.loads(text_data)
             message_type = text_data_json.get('type', '')
-
+            print(message_type)
+            print(text_data_json)
             if message_type == 'game_end':
                 player = text_data_json['player']
 

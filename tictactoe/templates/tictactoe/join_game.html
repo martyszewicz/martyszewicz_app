@@ -44,7 +44,7 @@
                                 <form method="post" action="{% url 'join_game' %}">
                                     {% csrf_token %}
                                     <input type="hidden" name="room_name" value="{{ game.room_name }}">
-                                    <label for="modalUsernameInput">Username:</label>
+                                    <label for="modalUsernameInput">{% trans 'Pseudonim' %}</label>
                                     <input type="text" class="form-control" id="modalUsernameInput" name="username" placeholder="{% trans 'Podaj swój pseudonim' %}" required>
                                     {% if game.is_private %}
                                         <label for="password">{% trans 'Hasło' %}:</label>

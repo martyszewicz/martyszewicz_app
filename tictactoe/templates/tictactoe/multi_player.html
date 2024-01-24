@@ -12,6 +12,8 @@
        draw: "{% trans 'Remis' %}",
        playerWin: "{% trans 'wygrywa gre' %}",
        yourTurn: "{% trans 'Twoja kolej' %}",
+       join: "{% trans 'dołączył do pokoju' %}",
+       left: "{% trans 'opuścił pokój' %}",
    };
 </script>
 <script src="{% static 'tictactoe/tictactoe.js' %}" charset="utf-8"></script>
@@ -44,7 +46,7 @@
         <div class="col">
           <form id="chat-form">
             <div class="form-group">
-                <div id="defaultInfoMessage" class="h4 pt-2" style="height: 20px;"></div>
+                <div id="defaultInfoMessage" class="h4 pt-2" style="height: 100%; display: flex"></div>
                 <label for="chat-text" class="h2 pt-2">{% trans 'Czat' %}</label>
                 <textarea class="form-control" id="chat-text" rows="10" readonly></textarea><br>
             </div>
