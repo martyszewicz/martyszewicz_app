@@ -29,14 +29,14 @@ class HomeView(View):
         return render(request, self.template_name)
 
 
-class ChangeLanguageView(View):
+class ChangeLanguageViewtictactoe(View):
     def get(self, request, language_code):
         if language_code in [lang[0] for lang in settings.LANGUAGES]:
             request.session['django_language'] = language_code
             activate(language_code)
-            return redirect(reverse('home'))
+            return render(request, 'tictactoe/home.html')
         else:
-            return redirect(reverse('home'))
+            return render(request, 'tictactoe/home.html')
 
 
 class NewGameView(View):

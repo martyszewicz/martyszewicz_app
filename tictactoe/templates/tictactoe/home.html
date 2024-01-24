@@ -38,7 +38,7 @@
     <ul class="dropdown-menu dropdown-menu-center">
         {% for code, language in LANGUAGES %}
             <li>
-                <a class="dropdown-item" href="{% url 'change_language' code %}">
+                <a class="dropdown-item" href="{% url 'change_languagetictactoe' code %}">
                     <img src="{% static 'tictactoe/images/'|add:code|add:'.png' %}" alt="{{ code }}">
                 </a>
             </li>
