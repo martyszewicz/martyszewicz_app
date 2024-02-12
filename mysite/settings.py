@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-gfl=+gm#h=oy8htaka!^x^ofddzvve$vw&emhr()13d$bx748z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+APP_NAME = os.environ.get("martyszewicz_app")
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', f"{APP_NAME}.fly.dev"]
 
 # Application definition
 
