@@ -34,9 +34,9 @@ class ChangeLanguageViewtictactoe(View):
         if language_code in [lang[0] for lang in settings.LANGUAGES]:
             request.session['django_language'] = language_code
             activate(language_code)
-            return render(request, 'tictactoe/home.html')
+            return redirect('home')
         else:
-            return render(request, 'tictactoe/home.html')
+            return redirect('home')
 
 
 class NewGameView(View):
