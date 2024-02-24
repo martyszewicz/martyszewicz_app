@@ -21,16 +21,18 @@ PL:
   ![Coffee_machine](images/coffee_machine.gif)
 
 EN:
+
   2. Movies collections:
   The application allows searching for movies from the IMDb library and, after creating an account, saving favorite movies to one's account. The administrator has the ability to manage users.
   The application also offers language selection.
   
 PL:
+
   2. Movies collections:
   Aplikacja oferuje wyszukiwanie filmów z biblioteki IMDb oraz po utworzeniu konta zapisanie ulubionych filmów na swoim koncie. Administrator posiada możliwość zarządzania użytkownikami.
   W aplikacji istnieje możliwość wyboru języka.
   
-![Movies_collections](images/movies_collections.gif)
+![Movies_collections](images/movies_collection.gif)
 
 EN:
   3. Tic tac toe:
