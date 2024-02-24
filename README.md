@@ -65,5 +65,5 @@ EN:
 PL:
 
   Wymagania:
-  Aby uruchomić aplikacje należy zainstalować wymagania z pliku requirements.txt
+  Aby uruchomić aplikacje należy zainstalować wymagania z pliku requirements.txt.
   W celu uruchomienia gry dla dwóch osób niezbędne jest uruchomienia serwera redis.
