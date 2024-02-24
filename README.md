@@ -35,11 +35,13 @@ PL:
 ![Movies_collections](images/movies_collection.gif)
 
 EN:
+
   3. Tic tac toe:
   A tic-tac-toe game offering the option to play against a computer or another player. After creating a room, protected by a password or not, players can play against each other. In the game room, there is a chat   available between players.
   Additionally, the application offers language selection.
   
 PL:
+
   3. Tic tak toe:
   Gra w kółko i krzyżyk, oferuje możliwość gry z komputerem oraz z innym graczem. 
   Po utworzeniu pokoju, zabezpieczonego hasłem lub nie istnieje możliwość gry z innym graczem. W pokoju gry dostępny jest czat między graczami.
@@ -47,17 +49,21 @@ PL:
 
 
   Single player / Tryb dla jednego gracza:
+  
   ![Tictactoe singleplayer](images/tictactoe_singleplayer.gif)
 
   Multi player / Tryb dla dwóch graczy:
+  
   ![Tictactoe_multiplayer](images/tictactoe_multiplayer.gif)
 
 EN:
+
   Requirements:
   To run the applications, you need to install the requirements from the requirements.txt file.
   To run the game for two people, it is necessary to run a Redis server.
-  
+
 PL:
+
   Wymagania:
   Aby uruchomić aplikacje należy zainstalować wymagania z pliku requirements.txt
   W celu uruchomienia gry dla dwóch osób niezbędne jest uruchomienia serwera redis.
